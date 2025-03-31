@@ -1,4 +1,7 @@
 const express = require('express');
+const bookingsRoutes = require('./routes/api/bookings');
+const spotsRoutes = require('./routes/api/spots');
+
 
 require('express-async-errors');
 
@@ -25,7 +28,8 @@ if (!isProduction) {
     // enable cors only in development
     app.use(cors());
   }
-   // helmet helps set a variety of headers to better secure your app
+  
+ // helmet helps set a variety of headers to better secure your app
   app.use(
     helmet.crossOriginResourcePolicy({
       policy: "cross-origin"
@@ -44,6 +48,8 @@ if (!isProduction) {
   );
 
 app.use(routes);
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/spots', spotsRoutes);
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
@@ -54,7 +60,6 @@ app.use((_req, _res, next) => {
 });
 
 app.use((err, _req, _res, next) => {
-  // check if error is a Sequelize error:
   if (err instanceof ValidationError) {
     let errors = {};
     for (let error of err.errors) {
@@ -65,7 +70,6 @@ app.use((err, _req, _res, next) => {
   }
   next(err);
 });
-
 
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
@@ -80,5 +84,6 @@ app.use((err, _req, res, _next) => {
 
 
 
-module.exports = app;
+
+  module.exports = app;
 
