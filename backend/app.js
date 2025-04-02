@@ -3,6 +3,7 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const bookingsRoutes = require('./routes/api/bookings');
 const spotsRoutes = require('./routes/api/spots');
+const sessionRoutes = require('./routes/api/session'); // Add session routes
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -13,8 +14,6 @@ const { ValidationError } = require('sequelize');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-
-const routes = require('./routes');
 
 const app = express();
 
@@ -46,10 +45,15 @@ app.use(
   })
 );
 
+// CSRF token endpoint
+app.get('/api/csrf-token', (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 // Add routes after security middleware
-app.use(routes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/spots', spotsRoutes);
+app.use('/api/session', sessionRoutes); // Add session routes
 
 // Catch unhandled requests and forward to error handler
 app.use((_req, _res, next) => {
