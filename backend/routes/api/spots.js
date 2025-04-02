@@ -40,6 +40,7 @@ router.get('/', validateQueryFilters, async (req, res) => {
       {
         model: SpotImage,
         attributes: ['url', 'preview'],
+        as: 'spotImages' // Ensure this alias matches your association definition
       },
     ],
   });
@@ -59,7 +60,7 @@ router.get('/current', requireAuth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   const spot = await Spot.findByPk(req.params.id, {
     include: [
-      { model: SpotImage, attributes: ['id', 'url', 'preview'] },
+      { model: SpotImage, attributes: ['id', 'url', 'preview'], as: 'spotImages' },
       { model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName'] },
     ],
   });

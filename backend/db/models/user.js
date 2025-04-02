@@ -4,10 +4,11 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.Bookings, { foreignKey: 'userId' });
-      // Ensure models.Bookings is a valid Sequelize model.
+      User.hasMany(models.Spot, { foreignKey: 'ownerId' });
+      User.hasMany(models.Booking, { foreignKey: 'userId' });
     }
   }
+
   User.init(
     {
       username: {
@@ -25,5 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
     }
   );
+
   return User;
 };
