@@ -16,6 +16,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+// Dynamically read all model files in the models directory
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -31,12 +32,17 @@ fs
     db[model.name] = model;
   });
 
+// Set up associations for each model
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+// Debugging: Log the loaded models for verification
+console.log('Loaded models:', Object.keys(db));
+
+// Export Sequelize and models
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
