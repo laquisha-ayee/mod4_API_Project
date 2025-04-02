@@ -1,3 +1,5 @@
+require('dotenv').config(); // Load environment variables
+
 const express = require('express');
 const bookingsRoutes = require('./routes/api/bookings');
 const spotsRoutes = require('./routes/api/spots');

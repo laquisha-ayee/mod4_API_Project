@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// backend/bin/www
 
 // Import environment variables
 require('dotenv').config();
@@ -7,10 +6,10 @@ require('dotenv').config();
 const { port } = require('../config');
 
 const app = require('../app');
-const db = require('../db/models');
+const { sequelize } = require('../db/models'); // Ensure sequelize is correctly imported
 
 // Check the database connection before starting the app
-db.sequelize
+sequelize
   .authenticate()
   .then(() => {
     console.log('Database connection success! Sequelize is ready to use...');
