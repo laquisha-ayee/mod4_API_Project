@@ -5,29 +5,35 @@ module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
     static associate(models) {
       SpotImage.belongsTo(models.Spot, { foreignKey: 'spotId' });
+      SpotImage.belongsTo(models.User, { foreignKey: 'userId' });
     }
   }
 
   SpotImage.init(
     {
-      spotId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       url: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       preview: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+        allowNull: false
+      }
+      // spotId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: { model: 'Spots', key: 'id' }
+      // }, 
+      // userId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      //   references: { model: 'Users', key: 'id'}
+      // },
     },
     {
       sequelize,
-      modelName: 'SpotImage',
+      modelName: 'SpotImage'
     }
   );
-
   return SpotImage;
 };

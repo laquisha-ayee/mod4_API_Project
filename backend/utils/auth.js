@@ -1,3 +1,4 @@
+// backend/utils/auth.js
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
 const { User } = require('../db/models');
@@ -31,7 +32,9 @@ const setTokenCookie = (res, user) => {
     return token;
   };
 
-  const restoreUser = (req, res, next) => {
+
+  // sign in again if we have prev signed in and still have a unexpired token
+const restoreUser = (req, res, next) => {
     // token parsed from cookies
     const { token } = req.cookies;
     req.user = null;
@@ -59,12 +62,15 @@ const setTokenCookie = (res, user) => {
     });
   };
 
-  const requireAuth = function (req, _res, next) {
+
+
+// If there is no current user, return an error ------ THIS IS A MIDDLEWARE USE THIS
+const requireAuth = function (req, _res, next) {
     if (req.user) return next();
   
     const err = new Error('Authentication required');
     err.title = 'Authentication required';
-    err.errors = { message: 'Authentication required' };
+    // err.errors = { message: 'Authentication required' };
     err.status = 401;
     return next(err);
   }

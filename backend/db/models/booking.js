@@ -1,30 +1,60 @@
 'use strict';
-const { Model } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  class Booking extends Model {
-    static associate(models) {
-      Booking.belongsTo(models.User, { foreignKey: 'userId' });
-      Booking.belongsTo(models.Spot, { foreignKey: 'spotId' });
-    }
-  }
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
 
-  Booking.init(
-    {
-      startDate: {
-        type: DataTypes.DATE,
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Bookings', {
+      id: {
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Spots',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      startDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       endDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
-    },
-    {
-      sequelize,
-      modelName: 'Booking',
-    }
-  );
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
+    }, options);
+  },
 
-  return Booking;
+  async down(queryInterface, Sequelize) {
+    options.tableName = "Bookings";
+    return queryInterface.dropTable(options);
+  }
 };

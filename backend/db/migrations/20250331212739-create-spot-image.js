@@ -1,46 +1,55 @@
 'use strict';
 
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      spotId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Spots', // Ensure this matches your Spots table
-          key: 'id',
-        },
-        onDelete: 'CASCADE', // Deletes images if the spot is deleted
+        type: Sequelize.INTEGER
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       preview: {
         type: Sequelize.BOOLEAN,
+        allowNull: false
+      }, 
+      spotId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: false,
+        references: { model: 'Spots', key: 'id' },
+        onDelete: 'CASCADE'
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'Users', key: 'id' },
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-    });
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
+    }, options);
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('SpotImages');
-  },
+  async down(queryInterface, Sequelize) {
+    options.tableName = "SpotImages";
+    return queryInterface.dropTable(options);
+  }
 };

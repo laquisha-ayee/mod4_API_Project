@@ -1,68 +1,41 @@
 'use strict';
 
-const { User, Spot, Review, ReviewImage } = require('../models');
+const { Review } = require('../models');
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    const demoUser = await User.findOne({ where: { username: 'Demo-lition' } });
-    const fakeUser1 = await User.findOne({ where: { username: 'FakeUser1' } });
-    const fakeUser2 = await User.findOne({ where: { username: 'FakeUser2' } });
-
-    const spots = await Spot.findAll();
-
+  async up(queryInterface, Sequelize) {
     await Review.bulkCreate([
       {
-        spotId: spots[0].id,
-        userId: fakeUser1.id,
-        review: 'Amazing place! Had a wonderful time.',
-        stars: 5,
+        spotId: 1,
+        userId: 1,
+        review: "Amazing place, very clean!",
+        stars: 5
       },
       {
-        spotId: spots[0].id,
-        userId: fakeUser2.id,
-        review: 'Great spot, but a bit noisy.',
-        stars: 4,
+        spotId: 2,
+        userId: 2,
+        review: "Nice spot, but a bit noisy.",
+        stars: 3
       },
       {
-        spotId: spots[1].id,
-        userId: demoUser.id,
-        review: 'Loved the ambiance and the location.',
-        stars: 5,
-      },
-      {
-        spotId: spots[1].id,
-        userId: fakeUser2.id,
-        review: 'Not bad, but could be better.',
-        stars: 3,
-      },
-      {
-        spotId: spots[2].id,
-        userId: fakeUser1.id,
-        review: 'Perfect getaway!',
-        stars: 5,
-      },
-    ]);
-
-    const reviews = await Review.findAll();
-
-    await ReviewImage.bulkCreate([
-      {
-        reviewId: reviews[0].id,
-        url: 'https://example.com/image1.jpg',
-      },
-      {
-        reviewId: reviews[0].id,
-        url: 'https://example.com/image2.jpg',
-      },
-      {
-        reviewId: reviews[2].id,
-        url: 'https://example.com/image3.jpg',
-      },
-    ]);
+        spotId: 3,
+        userId: 3,
+        review: "Great location and host.",
+        stars: 4
+      }
+    ], { validate: true });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('ReviewImages', null, {});
-    await queryInterface.bulkDelete('Reviews', null, {});
+  async down(queryInterface, Sequelize) {
+    options.tableName = 'Reviews';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      spotId: { [Op.in]: [1, 2, 3] }
+    }, {});
   }
 };

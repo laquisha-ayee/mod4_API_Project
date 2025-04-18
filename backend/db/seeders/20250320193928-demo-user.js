@@ -1,42 +1,67 @@
-'use strict';
+"use strict";
 
-const bcrypt = require('bcryptjs');
+const { User } = require("../models");
+const bcrypt = require("bcryptjs");
 
-let options = { tableName: 'Users' };
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA; // Define your schema in production
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Users', [
-      {
-        email: 'demo@user.io',
-        username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password'),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2'),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3'),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+    await User.bulkCreate(
+      [
+        {
+          firstName: "John",
+          lastName: "Smith",
+          email: "john.smith@gmail.com",
+          username: "JohnSmith",
+          hashedPassword: bcrypt.hashSync("secret password"),
+        },
+        {
+          firstName: "mason",
+          lastName: "hollo",
+          email: "first.test3@gmail.com",
+          username: "secre",
+          hashedPassword: bcrypt.hashSync("secret password"),
+        },
+        {
+          firstName: "natasha",
+          lastName: "richardson",
+          email: "user2@user.io",
+          username: "FakeUser2",
+          hashedPassword: bcrypt.hashSync("password3"),
+        },
+        {
+          firstName: "Demo",
+          lastName: "User",
+          email: "demo@user.com",
+          username: "DemoUser",
+          hashedPassword: bcrypt.hashSync("password123"),
+        },
+      ],
+      { validate: true, ...options }
+    );
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Users', {
-      username: { [Sequelize.Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-    }, {});
-  }
+  async down(queryInterface, Sequelize) {
+    options.tableName = "Users";
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(
+      options,
+      {
+        username: {
+          [Op.in]: [
+            "JohnSmith",
+            "secre",
+            "Demo-lition",
+            "DemoUser",
+            "FakeUser2",
+          ],
+        },
+      },
+      {}
+    );
+  },
 };
