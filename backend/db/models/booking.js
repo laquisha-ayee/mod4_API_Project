@@ -1,60 +1,39 @@
 'use strict';
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
-}
+module.exports = (sequelize, DataTypes) => {
+  const Booking = sequelize.define("Booking", {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    spotId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    startDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    endDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+    }
+  });
 
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bookings', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      spotId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Spots',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
-      },
-      startDate: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      endDate: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
-    }, options);
-  },
+  Booking.associate = function(models) {
+    Booking.belongsTo(models.User, { foreignKey: "userId" });
+    Booking.belongsTo(models.Spot, { foreignKey: "spotId" });
+  };
 
-  async down(queryInterface, Sequelize) {
-    options.tableName = "Bookings";
-    return queryInterface.dropTable(options);
-  }
+  return Booking;
 };
