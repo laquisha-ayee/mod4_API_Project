@@ -1,25 +1,19 @@
-//IMPORTS
 const express = require("express");
 require("express-async-errors");
-const routes = require("./routes");
 
-// SECURITY IMPORTS
 const morgan = require("morgan");
 const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 
-// UTILITY IMPORTS
 const cookieParser = require("cookie-parser");
 const { environment } = require("./config");
 const { ValidationError } = require("sequelize");
 
 const isProduction = environment === "production";
 
-// EXPRESS APPLICATION
 const app = express();
 
-// MIDDLEWARES
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
@@ -44,13 +38,14 @@ app.use(
   })
 );
 
-// ------------MIDDLEWARES MUST BE USED ABOVE THIS -------------
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the API!" });
+});
 
-//ROUTES!!!
+app.get("/api/protected-route", (req, res) => {
+  res.json({ message: "This is a protected route!" });
+});
 
-app.use(routes);
-
-// ERROR HANDLING
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
