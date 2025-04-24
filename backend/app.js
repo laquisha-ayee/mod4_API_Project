@@ -42,9 +42,27 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API!" });
 });
 
+
 app.get("/api/protected-route", (req, res) => {
   res.json({ message: "This is a protected route!" });
 });
+
+
+app.get("/api/spots/:spotId/bookings", (req, res) => {
+  const { spotId } = req.params;
+  res.json({ message: `Bookings for spot ${spotId}` });
+});
+
+app.get("/api/spots/current", (req, res) => {
+  res.json({ message: "Current spots route!" });
+});
+
+app.get("/api/spots/:spotsId/images", (req, res) => {
+  const { spotId } = req.params;
+  res.json({ message: 'Images for spot ${spotId}'});
+});
+
+
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
