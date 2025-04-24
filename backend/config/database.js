@@ -1,4 +1,3 @@
-//const config = require("./index");
 
 module.exports = {
   development: {
@@ -10,7 +9,7 @@ module.exports = {
     typeValidation: true,
   },
   production: {
-    use_env_variable: process.env.DATABASE_URL || "default_database_url",
+    use_env_variable: "DATABASE_URL",
     dialect: "postgres",
     seederStorage: "sequelize",
     dialectOptions: {
