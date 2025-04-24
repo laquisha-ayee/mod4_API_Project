@@ -21,7 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.14.1",
-    "sequelize": "^6.37.6",
+    "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.2"
   },
   "devDependencies": {
