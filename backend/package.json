@@ -3,20 +3,13 @@
   "version": "1.0.0",
   "main": "./bin/www",
   "scripts": {
-    "sequelize": "sequelize",
-    "sequelize-cli": "sequelize-cli",
     "start": "node ./bin/www",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "build": "node psql-setup-script.js"
+    "migrate": "npx sequelize-cli db:migrate"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
@@ -25,10 +18,8 @@
     "express-async-errors": "^3.1.1",
     "express-validator": "^7.2.1",
     "helmet": "^8.1.0",
-    "js": "^0.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "per-env": "^1.0.2",
     "pg": "^8.14.1",
     "sequelize": "^6.37.6",
     "sequelize-cli": "^6.6.2"
