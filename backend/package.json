@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "./bin/www",
   "scripts": {
-    "start": "node ./bin/www",
+    "sequelize": "sequelize",
+    "sequelize-cli": "sequelize-cli",
+    "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "migrate": "npx sequelize-cli db:migrate"
+    "build": "node psql-setup-script.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
