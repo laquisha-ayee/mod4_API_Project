@@ -1,7 +1,6 @@
 'use strict';
 
-const { Spot } = require('../models'); // Import Spot model
-
+const { Spot } = require('../models'); 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
@@ -11,7 +10,6 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
-
 
     const spots = await Spot.findAll();
 
@@ -43,7 +41,6 @@ module.exports = {
     }
 
     console.log("SpotImages to Insert:", spotImages); 
-
     return queryInterface.bulkInsert(options, spotImages);
   },
 

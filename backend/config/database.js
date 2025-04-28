@@ -22,4 +22,3 @@ module.exports = {
       schema: process.env.SCHEMA }
   }
 }
-
