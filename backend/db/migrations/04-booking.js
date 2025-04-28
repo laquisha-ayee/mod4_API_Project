@@ -1,9 +1,8 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA;  
 }
 
 module.exports = {
@@ -22,7 +21,7 @@ module.exports = {
           model: 'Spots',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'cascade'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -31,10 +30,14 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'cascade'
       },
       startDate: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      endDate: {
+        type: Sequelize.DATE,
         allowNull: false
       },
       createdAt: {
@@ -49,8 +52,8 @@ module.exports = {
       }
     }, options);
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bookings', options);
+    options.tableName = "Bookings";
+    return queryInterface.dropTable(options);
   }
 };
