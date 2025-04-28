@@ -1,4 +1,6 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
+
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {

@@ -1,10 +1,15 @@
-"use strict";
+'use strict';
+
+
+/** @type {import('sequelize-cli').Migration} */
+
 
 let options = {};
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
-
+// spots migration
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -14,57 +19,56 @@ module.exports = {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER,
+          type: Sequelize.INTEGER
         },
         ownerId: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          references: { model: 'Users',
-            key: 'id',},
-            onDelete: 'CASCADE',
-          },
+          references: { model: 'Users', key: 'id' },
+          onDelete: 'CASCADE'
+        },
         address: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: false
         },
         city: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: false
         },
         state: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: false
         },
         country: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: false
         },
         lat: {
           type: Sequelize.DECIMAL(10, 7),
-          allowNull: false,
+          allowNull: false
         },
         lng: {
           type: Sequelize.DECIMAL(10, 7),
-          allowNull: false,
+          allowNull: false
         },
         name: {
           type: Sequelize.STRING(50),
-          allowNull: false,
+          allowNull: false
         },
         description: {
           type: Sequelize.TEXT,
-          allowNull: false,
+          allowNull: false
         },
         price: {
           type: Sequelize.DECIMAL(10, 2),
-          allowNull: false,
+          allowNull: false
         },
         avgRating: {
-          type: Sequelize.DECIMAL(3,2),
+          type: Sequelize.DECIMAL(3, 2),
           allowNull: false,
           defaultValue: 0.0
         },
-        previewImage:{
+        previewImage: {
           type: Sequelize.STRING,
           allowNull: true,
           defaultValue: null
@@ -80,11 +84,10 @@ module.exports = {
           defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         }
       },
-      options
-    );
+      options );
   },
 
   async down(queryInterface, Sequelize) {
- await queryInterface.dropTable('Spots', options);
-  },
+    await queryInterface.dropTable('Spots', options);
+  }
 };
