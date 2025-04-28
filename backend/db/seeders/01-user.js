@@ -12,6 +12,7 @@ module.exports = {
       options,
       [
         {
+          id: 1,
           firstName: "John",
           lastName: "Smith",
           email: "john.smith@gmail.com",
@@ -21,6 +22,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          id: 2,
           firstName: "mason",
           lastName: "hollo",
           email: "first.test3@gmail.com",
@@ -30,6 +32,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          id: 3,
           firstName: "natasha",
           lastName: "richardson",
           email: "user2@user.io",
@@ -39,6 +42,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          id: 4,
           firstName: "Demo",
           lastName: "User",
           email: "demo@user.com",
