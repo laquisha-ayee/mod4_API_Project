@@ -1,44 +1,25 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const apiRouter = require("./api");
 
-router.use("/api", apiRouter);
+// Import API routes
+const apiRouter = require('./api');
+router.use('/api', apiRouter); // Only use API router
 
+
+// CSRF Route
 router.get("/api/csrf/restore", (req, res) => {
   res.cookie("XSRF-TOKEN", req.csrfToken());
-  return res.json({});
+  res.status(200).json({ "XSRF-Token": req.csrfToken() });
 });
 
-// Serve React build files in production
-if (process.env.NODE_ENV === "production") {
-  const path = require("path");
 
-  // Serve the frontend's index.html file at the root route
-  router.get("/", (req, res) => {
-    res.cookie("XSRF-TOKEN", req.csrfToken());
-    res.sendFile(
-      path.resolve(__dirname, "../../frontend", "dist", "index.html")
-    );
-  });
+// Test route
+router.get('/test', (req, res) => {
+  res.json({ message: 'API is working!' });
+});
 
-  // Serve static assets
-  router.use(express.static(path.resolve("../frontend/dist")));
-
-  // Serve index.html at all other routes NOT starting with /api
-  router.get(/^(?!\/?api).*/, (req, res) => {
-    res.cookie("XSRF-TOKEN", req.csrfToken());
-    res.sendFile(
-      path.resolve(__dirname, "../../frontend", "dist", "index.html")
-    );
-  });
-}
-
-// Restore CSRF token in development
-if (process.env.NODE_ENV !== "production") {
-  router.get("/api/csrf/restore", (req, res) => {
-    res.cookie("XSRF-TOKEN", req.csrfToken());
-    return res.json({});
-  });
-}
+//  Log all registered routes
+const expressListRoutes = require('express-list-routes');
+expressListRoutes(router);
 
 module.exports = router;

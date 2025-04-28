@@ -1,5 +1,7 @@
 "use strict";
 
+const bcrypt= require("bcryptjs");
+
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; 
@@ -7,52 +9,31 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = "Users"; 
+    options.tableName = 'Users'; 
     await queryInterface.bulkInsert(
-      options,
-      [
+      options, [
         {
-          id: 1,
-          firstName: "John",
-          lastName: "Smith",
-          email: "john.smith@gmail.com",
-          username: "JohnSmith",
-          hashedPassword: require("bcryptjs").hashSync("secret password"),
+          email: 'demo@user.io',
+          username: 'Demo-lition',
+          hashedPassword: bcryptjs.hashSync('password'),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
-          firstName: "mason",
-          lastName: "hollo",
-          email: "first.test3@gmail.com",
-          username: "secre",
-          hashedPassword: require("bcryptjs").hashSync("secret password"),
+          email: 'user1@user.io',
+          username: "FakeUser1",
+          hashedPassword: bcryptjs.hashSync('password2'),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 3,
-          firstName: "natasha",
-          lastName: "richardson",
           email: "user2@user.io",
           username: "FakeUser2",
-          hashedPassword: require("bcryptjs").hashSync("password3"),
+          hashedPassword: bcryptjs.hashSync('password3'),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        {
-          id: 4,
-          firstName: "Demo",
-          lastName: "User",
-          email: "demo@user.com",
-          username: "DemoUser",
-          hashedPassword: require("bcryptjs").hashSync("password123"),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
+      ]
     );
   },
 
@@ -63,10 +44,8 @@ module.exports = {
       options,
       {
         username: {
-          [Op.in]: ["JohnSmith", "secre", "DemoUser", "FakeUser2"],
-        },
-      },
-      {}
+          [Op.in]: ['Demo-lition', 'FakeUSer1', 'FakeUser2'], }
+      }
     );
-  },
+  }
 };

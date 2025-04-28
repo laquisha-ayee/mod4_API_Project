@@ -1,93 +1,86 @@
-const express = require("express");
-require("express-async-errors");
+const express = require('express');
+require('express-async-errors');
+const morgan = require('morgan');
+const cors = require('cors');
+const csurf = require('csurf');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
-const morgan = require("morgan");
-const cors = require("cors");
-const csurf = require("csurf");
-const helmet = require("helmet");
-
-const cookieParser = require("cookie-parser");
-const { environment } = require("./config");
-const { ValidationError } = require("sequelize");
-
-const isProduction = environment === "production";
+const routes = require('./routes');
+const { ValidationError } = require('sequelize');
+const { environment } = require('./config');
+const isProduction = environment === 'production';
 
 const app = express();
 
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+// Security Middleware
 if (!isProduction) {
+  // Enable CORS only in development
   app.use(cors());
 }
 
+// Helmet helps set a variety of headers to better secure your app
 app.use(
   helmet.crossOriginResourcePolicy({
-    policy: "cross-origin",
+    policy: "cross-origin"
   })
 );
 
+// Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
     cookie: {
       secure: isProduction,
       sameSite: isProduction && "Lax",
-      httpOnly: true,
-    },
+      httpOnly: true
+    }
   })
 );
 
-// Routes
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the API!" });
-});
+app.use(routes);
 
-app.get("/api/protected-route", (req, res) => {
-  res.json({ message: "This is a protected route!" });
-});
-
-app.get("/api/spots/:spotId/bookings", (req, res) => {
-  const { spotId } = req.params;
-  res.json({ message: `Bookings for spot ${spotId}` });
-});
-
-app.get("/api/spots/current", (req, res) => {
-  res.json({ message: "Current spots route!" });
-});
-
-app.get("/api/spots/:spotId/images", (req, res) => {
-  const { spotId } = req.params;
-  res.json({ message: `Images for spot ${spotId}` });
-});
-
-// Error handling
-app.use((_req, _res, next) => {
+ app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
-  err.errors = { message: "The requested resource couldn't be found." };
+  err.errors = ["The requested resource couldn't be found."];
   err.status = 404;
   next(err);
 });
 
+// Check if error is a Sequelize error
 app.use((err, _req, _res, next) => {
   if (err instanceof ValidationError) {
-    let errors = {};
-    for (let error of err.errors) {
-      errors[error.path] = error.message;
-    }
+    err.errors = err.errors.map((e) => e.message);
     err.title = "Validation error";
-    err.errors = errors;
   }
   next(err);
 });
 
+// Haandle CSRF Errors
+app.use((err, req, res, next) => {
+  if (err.code === "EBADCSRFTOKEN") {
+    return res.status(403).json({
+      title: "CSRF Error",
+      message: "Invalid CSRF token.",
+    });
+  }
+  next(err);
+});
+
+
+// Error handler
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
+    title: err.title || "Server Error",
     message: err.message,
     errors: err.errors,
+    stack: isProduction ? null : err.stack
   });
 });
 
