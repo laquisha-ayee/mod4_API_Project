@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "pg": "^8.15.6",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.2"
   },
   "name": "auth_me_project",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
