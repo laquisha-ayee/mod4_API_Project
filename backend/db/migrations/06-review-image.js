@@ -2,7 +2,7 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA;  
 }
 
 module.exports = {
@@ -14,36 +14,32 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      url: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       reviewId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Reviews', key: 'id' },
         onDelete: 'CASCADE'
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'CASCADE'
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      updatedAt: {
+     updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, options);
+    }, 
+    options
+    );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('ReviewImages');
+    await queryInterface.dropTable('ReviewImages, options');
   }
 };

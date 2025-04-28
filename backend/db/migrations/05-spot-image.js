@@ -3,7 +3,7 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA; 
 }
 
 module.exports = {
@@ -15,26 +15,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      url: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      preview: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      }, 
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Spots', key: 'id' },
         onDelete: 'CASCADE'
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'CASCADE'
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
+      preview: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }, 
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -44,12 +39,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
-    }, options);
+      }   
+    }, 
+    options);
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "SpotImages";
-    return queryInterface.dropTable(options);
+await queryInterface.dropTable('SpotImages', options);
   }
 };

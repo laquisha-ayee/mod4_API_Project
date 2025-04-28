@@ -37,10 +37,6 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      endDate: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -55,7 +51,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Bookings";
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable('Bookings', options);
   }
 };

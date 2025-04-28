@@ -14,20 +14,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'CASCADE'
-      },
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Spots', key: 'id' },
         onDelete: 'CASCADE'
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'Users', key: 'id' },
+        onDelete: 'CASCADE'
+      },
       review: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       stars: {
@@ -45,12 +45,12 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, options);
+    }, options
+);
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Reviews";
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable( 'Reviews', options);
   }
 };
 
