@@ -20,7 +20,6 @@ module.exports = (sequelize) => {
     name: { type: DataTypes.STRING(50), allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: false }, 
     price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-    previewImage: { type: DataTypes.STRING, allowNull: false, defaultValue: "https://example.com/default.jpg" }
   }, {
     sequelize,
     modelName: 'Spot',
