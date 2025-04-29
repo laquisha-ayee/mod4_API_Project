@@ -18,8 +18,5 @@ router.get('/test', (req, res) => {
   res.json({ message: 'API is working!' });
 });
 
-//  Log all registered routes
-const expressListRoutes = require('express-list-routes');
-expressListRoutes(router);
 
 module.exports = router;
