@@ -23,7 +23,6 @@ module.exports = {
           name: 'App Academy SF',
           description: 'A place where developers are made',
           price: 123,
-          previewImage: 'https://example.com/spot1.jpg',
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -38,7 +37,6 @@ module.exports = {
           name: 'Beach House',
           description: 'Beautiful! Stunning! Amazing!',
           price: 222,
-          previewImage: 'https://example.com/spot2.jpg',
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -53,7 +51,6 @@ module.exports = {
           name: 'Mountain Cabin',
           description: 'Great weekend getaway',
           price: 100,
-          previewImage: 'https://example.com/spot3.jpg',
           createdAt: new Date(),
           updatedAt: new Date()
         }
