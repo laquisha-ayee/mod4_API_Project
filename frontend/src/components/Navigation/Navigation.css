@@ -1,0 +1,28 @@
+.navigation-bar {
+    display: inline; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: cornflowerblue;
+    padding: 10px;
+}
+
+.profile-button button {
+    background: none;
+    border: none;
+    cursor: crosshair;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background: gainsboro;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    list-style: none;
+    padding: 10px;
+}
+
+profile-dropdown li {
+    padding: 5px;
+}
