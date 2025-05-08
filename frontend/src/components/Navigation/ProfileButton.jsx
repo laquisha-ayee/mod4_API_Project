@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/ProfileButton.jsx
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useModal } from "../../context/useModal";
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
 import SignupFormModal from "../SignupFormModal/SignupFormModal";

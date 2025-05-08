@@ -7,6 +7,12 @@ import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from './store/session';
 import HomePage from "./components/HomePage";
 import { ModalProvider, Modal } from './context/Modal';
+import SpotList from './spots/SpotList';
+import SpotDetails from './spots/SpotDetails';
+
+
+
+
 
 function Layout() {
   const dispatch = useDispatch();
@@ -33,7 +39,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage/>
-      }
+      },
+      {
+        path: '/spots',
+        element: <SpotList />
+      },
+      { 
+        path: '/spots/:spotId', 
+        element: <SpotDetails /> }
     ]
   }
 ]);
@@ -41,7 +54,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ModalProvider>
-      <Modal /> {}
+      <Modal />
       <RouterProvider router={router} />
     </ModalProvider>
   );
