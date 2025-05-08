@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from './store/session';
+import HomePage from "./components/HomePage";
+import { ModalProvider, Modal } from './context/Modal';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,14 +32,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <HomePage/>
       }
     ]
   }
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ModalProvider>
+      <Modal /> {}
+      <RouterProvider router={router} />
+    </ModalProvider>
+  );
 }
 
 export default App;
