@@ -19,13 +19,19 @@ function SpotDetails() {
   if (!spot) return <div>Spot not found.</div>;
 
   return (
-    <div>
-      <h1>{spot.name}</h1>
-       {/* Show the Pexels photo */}
-       <img
-        src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg"
-        alt="Golden Gate Bridge"
-        width={400}
+    <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight:"100vh" }} >
+
+        <h1>{spot.name}</h1>
+        {/* San Francisco Bridge Photo */}
+        <img
+        src="https://images.pexels.com/photos/1006965/pexels-photo-1006965.jpeg"
+        alt="San Francisco Bridge"
+        width={600}
         style={{ marginBottom: "20px" }}
       />
         <p><strong>Location:</strong> {spot.city}, {spot.state}, {spot.country}</p>
