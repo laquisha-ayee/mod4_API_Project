@@ -1,34 +1,42 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { FaUserCircle } from "react-icons/fa";
-import * as sessionActions from "../../store/session";
+// frontend/src/components/Navigation/ProfileButton.jsx
 
-function ProfileButton({ user }) { 
-  const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false); 
+import React, { useState } from "react";
+import { useModal } from "../../context/useModal";
+import LoginFormModal from "../LoginFormModal/LoginFormModal";
+import SignupFormModal from "../SignupFormModal/SignupFormModal";
 
-  const toggleMenu = () => {
-    setShowMenu((prev) => !prev);
-  };
+function ProfileButton({ user }) {
+  const [showMenu, setShowMenu] = useState(false);
+  const { setModalContent } = useModal();
 
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
+  const openLoginModal = () => setModalContent(<LoginFormModal />);
+  const openSignupModal = () => setModalContent(<SignupFormModal />);
+
+  const toggleMenu = () => setShowMenu(prev => !prev);
 
   return (
     <div className="profile-button">
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        {user ? user.username : "Profile"}
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.firstName} {user.lastName}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
+          {user ? (
+            <>
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              {/* Add logout or other user options here */}
+            </>
+          ) : (
+            <>
+              <li>
+                <button onClick={openLoginModal}>Log In</button>
+              </li>
+              <li>
+                <button onClick={openSignupModal}>Sign Up</button>
+              </li>
+            </>
+          )}
         </ul>
       )}
     </div>
@@ -36,6 +44,3 @@ function ProfileButton({ user }) {
 }
 
 export default ProfileButton;
-
-
-
