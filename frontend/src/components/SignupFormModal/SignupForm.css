@@ -1,0 +1,46 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;   
+    padding: 44px;
+    border-radius: 0px;
+    background: url('https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg') center/cover no-repeat;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    width: 600px;             
+    margin: 40px auto;        
+  }
+
+  .signup-form input {
+    background: rgba(255,255,255,0.9);
+    color: #222;
+    border: 1px solid #fff;
+  }
+  
+  .signup-form h1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: orange;
+  }
+  
+  .signup-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+    color:blanchedalmond;
+  }
+  
+  .signup-form label {
+    font-weight: bold;
+  }
+  
+  .signup-form input {
+    margin-top: 4px;
+    padding: 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
