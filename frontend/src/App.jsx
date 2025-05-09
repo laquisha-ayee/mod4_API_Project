@@ -9,10 +9,7 @@ import HomePage from "./components/HomePage";
 import { ModalProvider, Modal } from './context/Modal';
 import SpotList from './spots/SpotList';
 import SpotDetails from './spots/SpotDetails';
-
-
-
-
+import Footer from "./components/Footer/Footer"; // <-- Import Footer
 
 function Layout() {
   const dispatch = useDispatch();
@@ -27,7 +24,10 @@ function Layout() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
+      <div className="app-content">
+        {isLoaded && <Outlet />}
+      </div>
+      <Footer /> {}
     </>
   );
 }
