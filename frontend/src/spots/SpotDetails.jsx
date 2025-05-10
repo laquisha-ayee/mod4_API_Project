@@ -18,6 +18,11 @@ function SpotDetails() {
   if (loading) return <div>Loading...</div>;
   if (!spot) return <div>Spot not found.</div>;
 
+  // Find the preview image
+  const previewImage = spot.SpotImages
+    ? spot.SpotImages.find(img => img.preview)
+    : null;
+
   return (
     <div style={{
         display: "flex",
@@ -27,19 +32,18 @@ function SpotDetails() {
         minHeight:"100vh" }} >
 
         <h1>{spot.name}</h1>
-        {/* San Francisco Bridge Photo */}
         <img
-        src="https://images.pexels.com/photos/1006965/pexels-photo-1006965.jpeg"
-        alt="San Francisco Bridge"
-        width={600}
-        style={{ marginBottom: "20px" }}
-      />
+          src={previewImage ? previewImage.url : "https://via.placeholder.com/600x400?text=No+Image"}
+          alt={spot.name}
+          width={600}
+          style={{ marginBottom: "20px" }}
+        />
         <p><strong>Location:</strong> {spot.city}, {spot.state}, {spot.country}</p>
-      <p><strong>Address:</strong> {spot.address}</p>
-      <p><strong>Description:</strong> {spot.description}</p>
-      <p><strong>Price:</strong> ${spot.price} per night</p>
-      <p><strong>Average Rating:</strong> {spot.avgRating}</p>
-      <p><strong>Number of Reviews:</strong> {spot.numReviews}</p>
+        <p><strong>Address:</strong> {spot.address}</p>
+        <p><strong>Description:</strong> {spot.description}</p>
+        <p><strong>Price:</strong> ${spot.price} per night</p>
+        <p><strong>Average Rating:</strong> {spot.avgRating}</p>
+        <p><strong>Number of Reviews:</strong> {spot.numReviews}</p>
     </div>
   );
 }

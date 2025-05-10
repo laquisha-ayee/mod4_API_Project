@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import './SpotList.css';
 
 function SpotList() {
   const [spots, setSpots] = useState([]);
@@ -17,7 +18,7 @@ function SpotList() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <ul>
+    <ul className="centered-list">
       {spots.map(spot => (
         <li key={spot.id}>
           <Link to={`/spots/${spot.id}`}>

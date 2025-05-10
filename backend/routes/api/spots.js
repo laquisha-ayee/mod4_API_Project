@@ -442,7 +442,7 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res, next) => {
 router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   try {
     const { spotId } = req.params;
-    const { url, preview, userId } = req.body;
+    const { url, preview } = req.body; 
     const { user } = req;
 
     const spot = await Spot.findByPk(spotId);
@@ -463,7 +463,6 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
       spotId,
       url,
       preview,
-      userId,
     });
 
     return res.status(201).json({

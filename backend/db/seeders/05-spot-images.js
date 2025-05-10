@@ -22,21 +22,26 @@ module.exports = {
 
     if (spots.length >= 1) {
       spotImages.push(
-        { spotId: spots[0].id, url: 'https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg', preview: true, createdAt: new Date(), updatedAt: new Date() },
-        { spotId: spots[0].id, url: 'https://example.com/spot1-2.jpg', preview: false, createdAt: new Date(), updatedAt: new Date() }
+        { spotId: spots[0].id, url: 'https://images.pexels.com/photos/12582052/pexels-photo-12582052.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: true, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[0].id, url: 'https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: false, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[0].id, url: 'https://images.pexels.com/photos/1006965/pexels-photo-1006965.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: false, createdAt: new Date(), updatedAt: new Date() }
       );
     }
 
     if (spots.length >= 2) {
       spotImages.push(
-        { spotId: spots[1].id, url: 'https://www.pexels.com/photo/photo-of-villas-near-beach-2476632/', preview: true, createdAt: new Date(), updatedAt: new Date() }
+        { spotId: spots[1].id, url: 'https://images.pexels.com/photos/2476632/pexels-photo-2476632.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: true, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[1].id, url: 'https://images.pexels.com/photos/28843954/pexels-photo-28843954/free-photo-of-luxurious-oceanfront-bedroom-with-scenic-view.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: true, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[1].id, url: 'https://images.pexels.com/photos/31956331/pexels-photo-31956331/free-photo-of-urban-beach-scene-with-skyline-backdrop.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: true, createdAt: new Date(), updatedAt: new Date() }
+
       );
     }
 
     if (spots.length >= 3) {
       spotImages.push(
-        { spotId: spots[2].id, url: 'https://www.pexels.com/search/cabin/', preview: true, createdAt: new Date(), updatedAt: new Date() },
-        { spotId: spots[2].id, url: 'https://example.com/spot3-2.jpg', preview: false, createdAt: new Date(), updatedAt: new Date() }
+        { spotId: spots[2].id, url: 'https://images.pexels.com/photos/10511470/pexels-photo-10511470.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', preview: true, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[2].id, url: 'https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: false, createdAt: new Date(), updatedAt: new Date() },
+        { spotId: spots[2].id, url: 'https://images.pexels.com/photos/7163597/pexels-photo-7163597.jpeg?auto=compress&cs=tinysrgb&w=1200', preview: false, createdAt: new Date(), updatedAt: new Date() }
       );
     }
 
