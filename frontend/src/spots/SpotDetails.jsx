@@ -18,7 +18,6 @@ function SpotDetails() {
   if (loading) return <div>Loading...</div>;
   if (!spot) return <div>Spot not found.</div>;
 
-  // Find the preview image
   const previewImage = spot.SpotImages
     ? spot.SpotImages.find(img => img.preview)
     : null;

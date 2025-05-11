@@ -18,17 +18,34 @@ function SpotList() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <ul className="centered-list">
-      {spots.map(spot => (
-        <li key={spot.id}>
-          <Link to={`/spots/${spot.id}`}>
-            <strong>{spot.name}</strong>
-          </Link>
-          {" — "}
-          {spot.city}, {spot.state}
-        </li>
-      ))}
-    </ul>
+    <div className="spot-grid">
+      {spots.map(spot => {
+        // Find the preview image
+        const previewImage = spot.SpotImages?.find(img => img.preview) || spot.SpotImages?.[0];
+        return (
+          <div className="spot-card" key={spot.id}>
+            <Link to={`/spots/${spot.id}`}>
+              <img
+                src={previewImage ? previewImage.url : "https://via.placeholder.com/300x200?text=No+Image"}
+                alt={spot.name}
+                className="spot-image"
+              />
+              <div className="spot-info">
+                <div className="spot-location">
+                  {spot.city}, {spot.state}
+                  <span className="spot-rating">
+                    ★ {spot.avgRating ? spot.avgRating.toFixed(2) : "New"}
+                  </span>
+                </div>
+                <div className="spot-price">
+                  <strong>${spot.price}</strong> night
+                </div>
+              </div>
+            </Link>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
