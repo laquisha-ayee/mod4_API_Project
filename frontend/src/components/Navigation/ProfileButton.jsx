@@ -1,7 +1,7 @@
 // frontend/src/components/Navigation/ProfileButton.jsx
 
 import { useState } from "react";
-import { useModal } from "../../context/useModal";
+import { useModal } from "../../context/Modal";
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
 import SignupFormModal from "../SignupFormModal/SignupFormModal";
 
@@ -11,33 +11,28 @@ function ProfileButton({ user }) {
 
   const openLoginModal = () => setModalContent(<LoginFormModal />);
   const openSignupModal = () => setModalContent(<SignupFormModal />);
-
   const toggleMenu = () => setShowMenu(prev => !prev);
 
   return (
-    <div className="profile-button">
-      <button onClick={toggleMenu}>
-        {user ? user.username : "Profile"}
+    <div className="profile-menu-container">
+      <button className="profile-menu-btn" onClick={toggleMenu}>
+  <i className="fa fa-bars"></i>
+  <i className="fa fa-user-circle"></i>
       </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              {/* Add logout or other user options here */}
-            </>
-          ) : (
-            <>
-              <li>
-                <button onClick={openLoginModal}>Log In</button>
-              </li>
-              <li>
-                <button onClick={openSignupModal}>Sign Up</button>
-              </li>
-            </>
-          )}
-        </ul>
+  {showMenu && (
+  <ul className="profile-dropdown">
+    {!user && (
+      <>
+  <li>
+<button onClick={openSignupModal}>Sign up</button>
+  </li>
+  <li>
+<button onClick={openLoginModal}>Log in</button>
+  </li>
+  </>
+    )}
+          {/* Add user options here if logged in */}
+    </ul>
       )}
     </div>
   );

@@ -24,56 +24,41 @@
     color: darkmagenta;
     text-decoration: underline;
   }
-  .profile-button {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .profile-button button {
+  .profile-menu-btn {
     background: none;
     border: none;
-    color: black;
-    font-weight: normal;
-    font-size: 1rem;
+    font-size: 1.8rem;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
-    transition: color 0.2s;
-  }
-  
-  .profile-button button:hover,
-  .profile-button button:focus {
-    color: darkmagenta;
-    text-decoration: underline;
-  }
-  
-  .profile-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: antiquewhite;
-    border: none;
-    border-radius: 0;
-    list-style: none;
-    padding: 10px;
-    min-width: 120px;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
-  }
-  
-  .profile-dropdown button {
-    background: none;
-    border: none;
     color: black;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 4px 0;
-    width: 100%;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 50%;
+    padding: 8px 12px;
+    transition: background 0.2s;
   }
-  
-  .profile-dropdown button:hover,
-  .profile-dropdown button:focus {
-    color: darkmagenta;
-    text-decoration: underline;
-  }
+.profile-menu-btn {
+  background: lightpink;
+}
+.profile-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: antiquewhite;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+.profile-dropdown li {
+  padding: 0;
+}
+.profile-dropdown button:hover,
+.profile-dropdown button:focus {
+  background: lightpink;
+  color: darkmagenta;
+  text-decoration: underline;
+}
