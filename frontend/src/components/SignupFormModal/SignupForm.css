@@ -49,3 +49,22 @@
     border:2px solid black;
     border-radius: 2px;
   }
+
+
+.close-modal-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: lightpink;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: darkslategray;
+  z-index: 10;
+}
+.close-modal-btn:hover {
+  color: darkmagenta;
+}
+.signup-modal {
+  position: relative;
+}
