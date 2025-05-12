@@ -1,6 +1,6 @@
 // frontend/src/components/LoginFormModal/LoginFormModal.jsx
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
@@ -13,48 +13,68 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setErrors({});
+    setCredential("");
+    setPassword("");
+  }, []);
+
+const isButtonDisabled = credential.length < 4 || password.length < 6;
+
+const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
-  };
+  const data = await res.json();
+  if (data && data.errors) {
+   setErrors(data.errors);
+   }
+  });
+ };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button type="submit">Log In</button>
-      </form>
-    </>
-  );
-}
+ <div className="login-modal">
+  <button 
+className="close-modal-btn" 
+onClick={closeModal}>&times;</button>
+<h1>Log in</h1>
+<form onSubmit={handleSubmit}>
+     
+<label>
+Username or Email
+  <input
+  type="text"
+  value={credential}
+  onChange={(e) => setCredential(e.target.value)}
+  required
+ />
+</label>
+
+<label>
+Password
+<input
+  type="password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  required
+/>
+</label>
+        
+ {errors.credential && (
+ <p className="error">{errors.credential}</p>
+ )}
+<button 
+type="submit" 
+className="login-button" 
+disabled={isButtonDisabled}> 
+  Log In</button>
+</form>
+
+<a href="#" className="demo-user-link">Demo User</a>
+</div>
+);
+    }
 
 export default LoginFormModal;
