@@ -4,7 +4,7 @@ function HomePage() {
   return (
     <div
     style= {{
-      backgroundImage: "url('https://images.pexels.com/photos/414660/pexels-photo-414660.jpeg')",
+      backgroundImage: "url('https://images.pexels.com/photos/2948636/pexels-photo-2948636.jpeg?auto=compress&cs=tinysrgb&w=1200')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       minHeight: "100vh",

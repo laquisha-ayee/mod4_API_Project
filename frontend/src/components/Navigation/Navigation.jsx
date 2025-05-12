@@ -11,14 +11,14 @@ function Navigation({ isLoaded }) {
   return (
     <ul className="navigation-bar">
       <li>
-        <NavLink to="/" end>Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
+  <NavLink to="/" end>Home</NavLink>
+ </li>
+ {isLoaded && (
+  <li className="profile-nav-item">
+   <ProfileButton user={sessionUser} />
+ </li>
+  )}
+</ul>
   );
 }
 
