@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateSpotForm() {
+const navigate = useNavigate();
 
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
@@ -40,7 +42,9 @@ try {
       const data = await res.json();
       setErrors(data.errors || ["Something went wrong"]);
     } else {
-      alert("Spot created!");
+      const data = await res.json();
+      navigate(`/spots/${data.id}`);
+      //navigate("/spots");
     }
   } catch (err) {
     setErrors(["Network error"]);
@@ -48,7 +52,14 @@ try {
 };
 
 return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} 
+    style= {{ 
+      maxWidth: 500, 
+      margin: "2rem auto", 
+      display: "flex", 
+      flexDirection: "column", 
+      gap: "12px" }}>
+      
       <h2>Create a New Spot</h2>
       {errors.length > 0 && (
         <ul>

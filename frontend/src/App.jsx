@@ -10,6 +10,7 @@ import { ModalProvider, Modal } from './context/Modal';
 import SpotList from './spots/SpotList';
 import SpotDetails from './spots/SpotDetails';
 import Footer from "./components/Footer/Footer"; 
+import CreateSpotForm from './spots/CreateSpotForm';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -46,7 +47,12 @@ const router = createBrowserRouter([
       },
       { 
         path: '/spots/:spotId', 
-        element: <SpotDetails /> }
+        element: <SpotDetails /> },
+      {
+        path: '/spots/new',
+        element: <CreateSpotForm/>
+
+      }
     ]
   }
 ]);
