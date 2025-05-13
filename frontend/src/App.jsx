@@ -9,7 +9,7 @@ import HomePage from "./components/HomePage";
 import { ModalProvider, Modal } from './context/Modal';
 import SpotList from './spots/SpotList';
 import SpotDetails from './spots/SpotDetails';
-import Footer from "./components/Footer/Footer"; // <-- Import Footer
+import Footer from "./components/Footer/Footer"; 
 
 function Layout() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function Layout() {
       <div className="app-content">
         {isLoaded && <Outlet />}
       </div>
-      <Footer /> {}
+      <Footer />
     </>
   );
 }
