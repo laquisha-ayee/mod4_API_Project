@@ -20,113 +20,112 @@ function SignupFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-  setErrors({});
+      setErrors({});
   return dispatch(
-  sessionActions.signup 
-  ({ email, username, firstName, lastName, password })
-      )
-.then(closeModal)
-.catch(async (res) => {
+sessionActions.signup({
+email,
+ username,
+firstName,
+lastName,
+password
+})
+  )
+  .then(closeModal)
+  .catch(async (res) => {
   const data = await res.json();
-    if (data?.errors) {
-
-      setErrors(data.errors);
-  }
-});
+  if (data?.errors) {
+  setErrors(data.errors);
+   }
+ });
 }
-    
+
 return setErrors({
   confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+});
   };
 
-  return (
-    <div className="signup-form">
-   <div className="signup-form-content">
-  <button className="close-modal-btn" onClick={closeModal}>
+return (
+<div className="signup-form">
+  <div className="signup-form-content">
+ <button className="close-modal-btn" onClick={closeModal}>
     &times;
-  </button>
+ </button>
 
-  <h1>Enter your information</h1>
-    <form onSubmit={handleSubmit}>
-    <label>
-   Email
+<h1>Enter your information</h1>
+  <form onSubmit={handleSubmit}>
+   <label>
+  Email
    <input
-  type="text"
- value={email}
- onChange={(e) => setEmail(e.target.value)}
-  required
-  />
+     type="text"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    required
+   />
   </label>
 {errors.email && <p className="error">{errors.email}</p>}
 
 <label>
 Username
- <input type="text" 
- value={username}
-  onChange={(e) => setUsername(e.target.value)}
-  required
-  />
- </label>
-
- {errors.username && <p className="error">{errors.username}</p>}
+  <input
+ type="text"
+value={username}
+onChange={(e) => setUsername(e.target.value)}
+required
+/>
+  </label>
+{errors.username && <p className="error">{errors.username}</p>}
 
  <label>
-    First Name
-  <input
-    type="text"
-    value={firstName}
-    onChange={(e) => setFirstName(e.target.value)}
-    required
-  />
+ First Name
+<input
+ type="text"
+ value={firstName}
+  onChange={(e) => setFirstName(e.target.value)}
+required
+/>
   </label>
-  {errors.firstName && <p className="error">{errors.firstName}</p>}
-
-  <label>
-  Last Name
-    <input
-  type="text"
-  value={lastName}
-  onChange={(e) => setLastName(e.target.value)}
-  required
-  />
-      
-      </label>
- {errors.lastName && <p className="error">{errors.lastName}</p>}
+{errors.firstName && <p className="error">{errors.firstName}</p>}
 
 <label>
-  Password
+ Last Name
   <input
- type="password"
- value={password}
-onChange={(e) => setPassword(e.target.value)}
+type="text"
+value={lastName}
+onChange={(e) => setLastName(e.target.value)}
 required
- />
-   
-   </label>
- {errors.password && <p className="error">{errors.password}</p>}
+/>
+  </label>
+{errors.lastName && <p className="error">{errors.lastName}</p>}
 
-    <label>
-  Confirm Password
-   <input
-   type="password"
-   value={confirmPassword}
-  onChange={(e) => setConfirmPassword(e.target.value)}
+ <label>
+ Password
+ <input
+  type="password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
   required
- />
- </label>
-{errors.confirmPassword && (
- <p className="error">{errors.confirmPassword}</p>
+  />
+  </label>
+  {errors.password && <p className="error">{errors.password}</p>}
+
+  <label>
+ Confirm Password
+ <input
+type="password"
+value={confirmPassword}
+onChange={(e) => setConfirmPassword(e.target.value)}
+required
+/>
+</label>
+ {errors.confirmPassword && (
+<p className="error">{errors.confirmPassword}</p>
 )}
 
 <button type="submit">Sign Up</button>
-       
-       
-       
 </form>
- </div>
-  </div>
-  );
-}
+   </div>
+      </div>
+);
+  }
 
 export default SignupFormModal;
