@@ -20,22 +20,17 @@ function Navigation({ isLoaded }) {
 </NavLink>
 </li>
 
-
-<li>
+<li className="right-nav-items"> 
   <NavLink to="/spots/new" className="create-spot-link">
  Create A New Spot
   </NavLink>
-</li>
-
-      
 {isLoaded && (
- <li className="profile-nav-item">
+ <span className="profile-nav-item">
   <ProfileButton user={sessionUser} />
-</li>
-
+</span>
 )}
-
-</ul>
+</li>
+  </ul>
   );
 }
 

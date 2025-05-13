@@ -8,9 +8,25 @@
   list-style: none;
   margin: 0;
 }
-.profile-nav-item {
-  margin-left: auto;
+.logo-link {
+  display: flex;
+  align-items: center;
 }
+.logo-img {
+  height: 80px;
+  width: 150px;
+  object-fit: contain;
+  vertical-align: middle;
+  border-radius: 0;
+}
+.right-nav-items {
+margin-left: auto;
+display: flex;
+align-items: center;
+gap: 24px;
+}
+
+
 .navigation-bar li {
   list-style: none;
 }
@@ -29,20 +45,11 @@
   text-decoration: underline;
 }
 
-.logo-img {
-  height: 80px;
-  width: auto;
-  object-fit: contain;
-  vertical-align: middle;
-  border-radius: 8px;
-}
-
-
 
 .profile-menu-btn {
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 4px 8px;              
   display: flex;
   align-items: center;
@@ -53,7 +60,7 @@
   font-size: 1rem;              
 }
 .menu-icon {
-  font-size: 2rem;
+  font-size: 30px;
   color: #444;
   line-height: 1;
 }
