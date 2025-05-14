@@ -34,6 +34,17 @@ const handleSubmit = (e) => {
   });
  };
 
+const handleDemoLogin = (e) => {
+  e.preventDefault();
+  setErrors({});
+  dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
+  .then(closeModal)
+  .catch(async (res) => {
+const data = await res.json();
+  if (data && data.errors) setErrors(data.errors);
+    });
+};
+
   return (
  <div className="login-modal">
   <button 
@@ -72,7 +83,8 @@ disabled={isButtonDisabled}>
   Log In</button>
 </form>
 
-<a href="#" className="demo-user-link">Demo User</a>
+
+<a href="#" className="demo-user-link" onClick={handleDemoLogin}>Demo User</a>
 </div>
 );
     }

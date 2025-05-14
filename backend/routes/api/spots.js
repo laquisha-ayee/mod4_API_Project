@@ -125,16 +125,20 @@ const validateQueryParams = [
     .withMessage("Maximum price must be greater than or equal to 0"),
   handleValidationErrors,
 ];
+
 //get spots owned by currnet user
 router.get("/current", requireAuth, async (req, res, next) => {
   try {
     const userId = req.user.id;
+    let { page, size } = req.query;
+    page = parseInt(page) || 1;
+    size = parseInt(size) || 20;
+
     const spots = await Spot.findAll({
       where: { ownerId: userId },
       attributes: {
         include: [
-          [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgRating"],
-          [Sequelize.literal("'image url'"), "previewImage"],
+          [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgRating"]
         ],
       },
       include: [
@@ -143,7 +147,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
           attributes: [],
         },
         {
-          model: SpotImage, //Include SpotImage to fetch the preview image
+          model: SpotImage,
           attributes: ["url"],
           where: { preview: true },
           required: false,
@@ -151,18 +155,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
       ],
       group: [
         "Spot.id",
-        "Spot.ownerId",
-        "Spot.address",
-        "Spot.city",
-        "Spot.state",
-        "Spot.country",
-        "Spot.lat",
-        "Spot.lng",
-        "Spot.name",
-        "Spot.description",
-        "Spot.price",
-        "Spot.createdAt",
-        "Spot.updatedAt",
         "SpotImages.id",
       ],
       limit: size,
@@ -176,10 +168,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
       previewImage:
         spot.SpotImages?.length > 0
           ? spot.SpotImages[0].url
-          : "/default-image.png", //Ensure preview image is available
+          : "/default-image.png",
     }));
 
-    return res.status(200).json({ Spots: spots });
+    return res.status(200).json({ Spots: formattedSpots });
   } catch (error) {
     next(error);
   }
