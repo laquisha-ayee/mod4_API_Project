@@ -85,3 +85,13 @@
     margin-top: -5px;
     font-weight: 500;
 }
+.edit-btn, .delete-btn {
+  padding: 6px 18px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 0px;
+  background: antiquewhite;
+  color: black;
+  cursor: pointer;
+  margin-bottom: 8px;
+}

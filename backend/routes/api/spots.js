@@ -467,6 +467,59 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   }
 });
 
+
+// Delete a Spot Image by imageId
+router.delete('/spot-images/:imageId', requireAuth, async (req, res, next) => {
+  try {
+    const { imageId } = req.params;
+    const image = await SpotImage.findByPk(imageId, {
+      include: [{ model: Spot }]
+    });
+
+    if (!image) {
+      return res.status(404).json({ message: "Spot Image couldn't be found" });
+    }
+
+    // Only the owner of the spot can delete the image
+    if (image.Spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    await image.destroy();
+    return res.status(200).json({ message: "Successfully deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// Update a Spot Image by imageId
+router.put('/spot-images/:imageId', requireAuth, async (req, res, next) => {
+  try {
+    const { imageId } = req.params;
+    const { url } = req.body;
+    const image = await SpotImage.findByPk(imageId, {
+      include: [{ model: Spot }]
+    });
+
+    if (!image) {
+      return res.status(404).json({ message: "Spot Image couldn't be found" });
+    }
+
+    if (image.Spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    image.url = url;
+    await image.save();
+
+    return res.status(200).json(image);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 //CREATE A REVIEW FOR A SPOT BASED ON SPOTID
 router.post(
   "/:spotId/reviews",
@@ -665,4 +718,7 @@ router.post(
   }
 );
 
+
+
 module.exports = router;
+

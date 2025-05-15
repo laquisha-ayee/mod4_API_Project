@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import CreateSpotForm from './spots/CreateSpotForm';
 import ManageSpots from './spots/ManageSpots';
 
+
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
       {
         path: '/spots/current',   
         element: <ManageSpots />
-      }
+      },
     ]
   }
 ])
