@@ -13,7 +13,9 @@ export default defineConfig(({ mode }) => ({
   ],
   server: {
     proxy: {
-      '/api': 'http://localhost:8000'
+      '/api': mode === 'production' 
+        ? process.env.VITE_API_URL || 'http://localhost:8000'
+        : 'http://localhost:8000'
     },
   }
 }));
