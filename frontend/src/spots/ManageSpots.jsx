@@ -12,15 +12,16 @@ function ManageSpots() {
  
 
 useEffect(() => {
-    fetch("/api/spots/current")
-.then(res => res.json())
-.then(data => {
-    setSpots(Array.isArray(data.Spots) ? data.Spots : []);
-    setLoading(false);
-      });
-  }, 
-  []);
+const apiUrl = import.meta.env.VITE_API_URL || '';
+fetch(`${apiUrl}/api/spots/current`)
+    .then(res => res.json())
+    .then(data => {
+  setSpots(Array.isArray(data.Spots) ? data.Spots : []);
+  setLoading(false);
+});
+  }, []);
 
+  
 const handleDeleteClick = (spotId) => {
     setSpotToDelete(spotId);
     setShowModal(true);

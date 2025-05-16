@@ -6,14 +6,15 @@ function SpotList() {
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("/api/spots")
-      .then(res => res.json())
-      .then(data => {
-        setSpots(Array.isArray(data.Spots) ? data.Spots : []);
-        setLoading(false);
-      });
-  }, []);
+useEffect(() => {
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+  fetch(`${apiUrl}/api/spots`)
+.then(res => res.json())
+.then(data => {
+  setSpots(Array.isArray(data.Spots) ? data.Spots : []);
+  setLoading(false);
+ });
+}, []);
 
   if (loading) return <div>Loading...</div>;
 
