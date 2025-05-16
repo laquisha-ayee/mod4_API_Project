@@ -11,6 +11,8 @@ import SpotDetails from './spots/SpotDetails';
 import Footer from "./components/Footer/Footer"; 
 import CreateSpotForm from './spots/CreateSpotForm';
 import ManageSpots from './spots/ManageSpots';
+import EditSpotForm from './spots/EditSpotForm';
+
 
 
 function Layout() {
@@ -58,6 +60,10 @@ const router = createBrowserRouter([
         path: '/spots/current',   
         element: <ManageSpots />
       },
+        {
+     path: '/spots/:spotId/edit',
+     element: <EditSpotForm />
+   },
     ]
   }
 ])
