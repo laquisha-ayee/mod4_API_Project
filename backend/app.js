@@ -21,6 +21,11 @@ app.use(express.json());
 if (!isProduction) {
   // Enable CORS only in development
   app.use(cors());
+} else {
+  app.use(cors({
+    origin: 'https://mod4-api-project-frontend.onrender.com',
+    credentials: true 
+  }));
 }
 
 // Helmet helps set a variety of headers to better secure your app
@@ -85,3 +90,4 @@ app.use((err, _req, res, _next) => {
 });
 
 module.exports = app;
+
