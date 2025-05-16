@@ -6,32 +6,61 @@ import { csrfFetch } from "../store/csrf";
 function ManageSpots() {
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [spotToDelete, setSpotToDelete] = useState(null);
   const navigate = useNavigate();
-
  
 
-  useEffect(() => {
+useEffect(() => {
     fetch("/api/spots/current")
 .then(res => res.json())
 .then(data => {
     setSpots(Array.isArray(data.Spots) ? data.Spots : []);
     setLoading(false);
       });
-  }, []);
+  }, 
+  []);
 
-  const handleDelete = async (spotId) => {
-    if (window.confirm("Are you sure you want to delete this spot?")) {
-try {
-    await csrfFetch(`/api/spots/${spotId}`, { method: "DELETE" });
-setSpots(spots.filter(spot => spot.id !== spotId));
-if (spots.length === 1) {
-    navigate('/spots');
-    }
+const handleDeleteClick = (spotId) => {
+    setSpotToDelete(spotId);
+    setShowModal(true);
+};
+
+const handleConfirmDelete = async () => {
+    try {
+await csrfFetch(`/api/spots/${spotToDelete}`, { method: "DELETE" });
+setSpots(spots.filter(spot => spot.id !== spotToDelete));
+setShowModal(false);
+setSpotToDelete(null);
+ if (spots.length === 1) {
+        navigate('/spots');
+  }
 } catch (err) {
 alert("Failed to delete spot.");
+setShowModal(false);
+setSpotToDelete(null);
 }
-    }
   };
+
+const handleCancelDelete = () => {
+    setShowModal(false);
+    setSpotToDelete(null);
+};
+
+const ConfirmDeleteModal = ({ onConfirm, onCancel }) => (
+<div className="modal-overlay">
+<div className="modal-content">
+    <h2>Confirm Delete</h2>
+<p>Are you sure you want to remove this spot from the listing?</p>
+<button className="delete-btn" onClick={onConfirm}>
+    Yes (Delete Spot)
+    </button>
+<button className="cancel-btn" onClick={onCancel}>
+    No (Keep Spot)
+</button>
+</div>
+</div>
+);
 
 
   if (loading) return <div>Loading...</div>;
@@ -45,7 +74,7 @@ alert("Failed to delete spot.");
     {spots.map(spot => (
 <div className="spot-card" key={spot.id}>
     <Link to={`/spots/${spot.id}`}>
-              
+
 <img
     src={spot.previewImage || "https://via.placeholder.com/300x200?text=No+Image"}
     alt={spot.name}
@@ -71,17 +100,25 @@ alert("Failed to delete spot.");
 <button className="edit-btn">Edit</button>
   </Link>
  
- <button
-    className="delete-btn"
-    onClick={() => handleDelete(spot.id)}>
+ <button className="delete-btn"
+    onClick={() => handleDeleteClick(spot.id)}>
  Delete
 </button>
  </div>
 </div>
     ))}
 </div>
-    </div>
+{showModal && (
+<ConfirmDeleteModal
+  onConfirm={handleConfirmDelete}
+ onCancel={handleCancelDelete} 
+/>
+)}
+</div>
 );
-    }  
+}
+
+
+
 
 export default ManageSpots;
