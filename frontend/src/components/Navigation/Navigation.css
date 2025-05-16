@@ -1,0 +1,123 @@
+.navigation-bar {
+  display: flex; 
+  justify-content: flex-start;
+  align-items: center;
+  background-color: pink;
+  padding: 10px;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+}
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+.logo-img {
+  height: 80px;
+  width: 150px;
+  object-fit: contain;
+  vertical-align: middle;
+  border-radius: 0;
+}
+.right-nav-items {
+margin-left: auto;
+display: flex;
+align-items: center;
+gap: 24px;
+}
+
+
+.navigation-bar li {
+  list-style: none;
+}
+.navigation-bar a {
+  color: black;
+  text-decoration: none;
+  font-weight: normal;
+  transition: color 0.2s;
+}
+.navigation-bar a:hover {
+  color: darkmagenta;
+  text-decoration: underline;
+}
+.navigation-bar .active {
+  color: darkmagenta;
+  text-decoration: underline;
+}
+
+
+.profile-menu-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 4px 8px;              
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: background 0.2s, box-shadow 0.2s;
+  font-size: 1rem;              
+}
+.menu-icon {
+  font-size: 30px;
+  color: #444;
+  line-height: 1;
+}
+.profile-pic {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+.profile-menu-container {
+  position: relative;
+}
+.profile-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: antiquewhite;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+.profile-dropdown li {
+  padding: 0;
+}
+.profile-dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: black;
+  transition: all 0.2s;
+}
+.profile-dropdown button:hover,
+.profile-dropdown button:focus {
+  background: lightpink;
+  color: darkmagenta;
+  text-decoration: underline;
+}
+.profile-dropdown li:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}

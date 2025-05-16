@@ -1,0 +1,97 @@
+.create-spot-form {
+    max-width: 600px;
+    margin: 32px auto;
+    background: salmon;
+    border-radius: 8px;
+    padding: 32px 40px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.create-spot-form h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 24px;
+}
+.create-spot-form section {
+    border-bottom: 2px solid darkslategray;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+}
+.create-spot-form section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.create-spot-form h2 {
+    font-size: 19px;
+    margin-bottom: 3px;
+}
+.create-spot-form p {
+    font-size: 15px;
+    color: darkslategray;
+    margin-bottom: 5px;
+}
+.create-spot-form input,
+.create-spot-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1.5px solid rgb(95, 90, 90);
+    border-radius: 4px;
+    font-size: 16px;
+    background: antiquewhite;
+    transition: border 0.2s;
+}
+.create-spot-form input:focus,
+.create-spot-form textarea:focus {
+    border: 3px solid red;
+    outline: none;
+}
+.create-spot-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+.city-state-row,
+.lat-lng-row {
+  display: flex;
+  margin-top: 18px; 
+}
+.lat-lng-row {
+    margin-top: 8px;
+}
+
+
+.create-spot-btn {
+    background: pink;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 0;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background 0.2s;
+}
+.create-spot-btn:hover {
+    background: rgb(149, 3, 64);
+}
+.error {
+    color: red;
+    font-size: 15px;
+    margin-bottom: 8px;
+    margin-top: -5px;
+    font-weight: 500;
+}
+.edit-btn, .delete-btn {
+  padding: 6px 18px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 0px;
+  background: antiquewhite;
+  color: black;
+  cursor: pointer;
+  margin-bottom: 8px;
+}

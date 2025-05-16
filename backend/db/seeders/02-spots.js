@@ -5,60 +5,123 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Spots';
-    try {
-
-      await queryInterface.bulkInsert(options, [
-        {
-          ownerId: 1,
-          address: '123 Main St',
-          city: 'San Francisco',
-          state: 'CA',
-          country: 'USA',
-          lat: 37.7749,
-          lng: -122.4194,
-          name: 'App Academy SF',
-          description: 'A place where developers are made',
-          price: 123,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          ownerId: 2,
-          address: '456 Beach Ave',
-          city: 'Miami',
-          state: 'FL',
-          country: 'USA',
-          lat: 25.7617,
-          lng: -80.1918,
-          name: 'Beach House',
-          description: 'Beautiful! Stunning! Amazing!',
-          price: 222,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          ownerId: 3,
-          address: '789 Mountain Rd',
-          city: 'Denver',
-          state: 'CO',
-          country: 'USA',
-          lat: 39.7392,
-          lng: -104.9903,
-          name: 'Mountain Cabin',
-          description: 'Great weekend getaway',
-          price: 100,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-      ]);
-    } catch (error) {
-      console.error('SEED ERROR:', error);
-      throw error;
-    }
+    await queryInterface.bulkInsert(options, [
+      {
+        ownerId: 1,
+        address: '123 Main St',
+        city: 'San Francisco',
+        state: 'CA',
+        country: 'USA',
+        lat: 37.7749,
+        lng: -122.4194,
+        name: 'App Academy SF',
+        description: 'A place where developers are made',
+        price: 123,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 2,
+        address: '456 Beach Ave',
+        city: 'Miami',
+        state: 'FL',
+        country: 'USA',
+        lat: 25.7617,
+        lng: -80.1918,
+        name: 'Beach House',
+        description: 'A comfy space, so close to the ocean',
+        price: 222,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '789 Mountain Rd',
+        city: 'Denver',
+        state: 'CO',
+        country: 'USA',
+        lat: 39.7392,
+        lng: -104.9903,
+        name: 'Mountain Cabin',
+        description: 'So much fresh air! and Stunning views!',
+        price: 100,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 4,
+        address: '420 Hogwarts Way',
+        city: 'Los Angeles',
+        state: 'CA',
+        country: 'USA',
+        lat: 34.0522,
+        lng: -118.2437,
+        name: 'Harrys Hotel',
+        description: 'Its Magically fun for everyone',
+        price: 321,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 5,
+        address: '222 BlueSky Dr',
+        city: 'Denver',
+        state: 'CO',
+        country: 'USA',
+        lat: 39.7392,
+        lng: -104.9903,
+        name: 'Macbeth Hotel',
+        description: 'Victorian style hotel',
+        price: 204,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 6,
+        address: '92 Foote st',
+        city: 'Hilo',
+        state: 'HI',
+        country: 'USA',
+        lat: 19.7297,
+        lng: -155.0900,
+        name: 'Mahalo Days',
+        description: 'Beautiful retreat, that feels like home',
+        price: 555,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 7,
+        address:'72 Mammoth Way',
+        city: 'Yellowstone National Park',
+        state: 'WY',
+        country: 'USA',
+        lat: 44.4280,
+        lng: -110.5885,
+        name: 'Springs Tepee',
+        description: 'Close to nature, luxury tepees',
+        price: 108,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 8,
+        address:'18 Descansos Dr.',
+        city: 'La Cañada Flintridge',
+        state: 'CA',
+        country: 'USA',
+        lat: 34.2103,
+        lng: -118.2006,
+        name: 'Edens Garden',
+        description: 'A tranquil and beautiful getaway',
+        price: 108,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

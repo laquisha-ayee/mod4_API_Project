@@ -125,16 +125,20 @@ const validateQueryParams = [
     .withMessage("Maximum price must be greater than or equal to 0"),
   handleValidationErrors,
 ];
+
 //get spots owned by currnet user
 router.get("/current", requireAuth, async (req, res, next) => {
   try {
     const userId = req.user.id;
+    let { page, size } = req.query;
+    page = parseInt(page) || 1;
+    size = parseInt(size) || 20;
+
     const spots = await Spot.findAll({
       where: { ownerId: userId },
       attributes: {
         include: [
-          [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgRating"],
-          [Sequelize.literal("'image url'"), "previewImage"],
+          [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgRating"]
         ],
       },
       include: [
@@ -143,7 +147,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
           attributes: [],
         },
         {
-          model: SpotImage, //Include SpotImage to fetch the preview image
+          model: SpotImage,
           attributes: ["url"],
           where: { preview: true },
           required: false,
@@ -151,18 +155,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
       ],
       group: [
         "Spot.id",
-        "Spot.ownerId",
-        "Spot.address",
-        "Spot.city",
-        "Spot.state",
-        "Spot.country",
-        "Spot.lat",
-        "Spot.lng",
-        "Spot.name",
-        "Spot.description",
-        "Spot.price",
-        "Spot.createdAt",
-        "Spot.updatedAt",
         "SpotImages.id",
       ],
       limit: size,
@@ -176,10 +168,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
       previewImage:
         spot.SpotImages?.length > 0
           ? spot.SpotImages[0].url
-          : "/default-image.png", //Ensure preview image is available
+          : "/default-image.png",
     }));
 
-    return res.status(200).json({ Spots: spots });
+    return res.status(200).json({ Spots: formattedSpots });
   } catch (error) {
     next(error);
   }
@@ -442,7 +434,7 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res, next) => {
 router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   try {
     const { spotId } = req.params;
-    const { url, preview, userId } = req.body;
+    const { url, preview } = req.body; 
     const { user } = req;
 
     const spot = await Spot.findByPk(spotId);
@@ -463,7 +455,6 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
       spotId,
       url,
       preview,
-      userId,
     });
 
     return res.status(201).json({
@@ -475,6 +466,59 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
     next(error);
   }
 });
+
+
+// Delete a Spot Image by imageId
+router.delete('/spot-images/:imageId', requireAuth, async (req, res, next) => {
+  try {
+    const { imageId } = req.params;
+    const image = await SpotImage.findByPk(imageId, {
+      include: [{ model: Spot }]
+    });
+
+    if (!image) {
+      return res.status(404).json({ message: "Spot Image couldn't be found" });
+    }
+
+    // Only the owner of the spot can delete the image
+    if (image.Spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    await image.destroy();
+    return res.status(200).json({ message: "Successfully deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// Update a Spot Image by imageId
+router.put('/spot-images/:imageId', requireAuth, async (req, res, next) => {
+  try {
+    const { imageId } = req.params;
+    const { url } = req.body;
+    const image = await SpotImage.findByPk(imageId, {
+      include: [{ model: Spot }]
+    });
+
+    if (!image) {
+      return res.status(404).json({ message: "Spot Image couldn't be found" });
+    }
+
+    if (image.Spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    image.url = url;
+    await image.save();
+
+    return res.status(200).json(image);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 //CREATE A REVIEW FOR A SPOT BASED ON SPOTID
 router.post(
@@ -674,4 +718,7 @@ router.post(
   }
 );
 
+
+
 module.exports = router;
+

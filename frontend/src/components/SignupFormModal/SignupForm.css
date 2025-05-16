@@ -1,0 +1,70 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;   
+    padding: 44px;
+    border-radius: 0px;
+    background: url('https://images.pexels.com/photos/907485/pexels-photo-907485.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover no-repeat;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    width: 600px;             
+    margin: 40px auto;        
+  }
+
+  .signup-form input {
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  border: 1px solid #fff;
+}
+  
+  .signup-form h1 {
+    font-size: 44px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: black;
+  }
+  
+  .signup-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+    color: black;
+  }
+  
+  .signup-form label {
+    font-weight: bold;
+  }
+  
+  .signup-form input {
+    margin-top: 4px;
+    padding: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    border:2px solid black;
+    border-radius: 2px;
+  }
+
+
+.close-modal-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: lightpink;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: darkslategray;
+  z-index: 10;
+}
+.close-modal-btn:hover {
+  color: darkmagenta;
+}
+.signup-modal {
+  position: relative;
+}

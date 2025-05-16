@@ -16,6 +16,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      firstName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       username: {
         type: Sequelize.STRING(30),
         allowNull: false,
@@ -44,6 +52,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('User', options);
+    return queryInterface.dropTable('Users', options); // Should be 'Users', not 'User'
   }
 };
