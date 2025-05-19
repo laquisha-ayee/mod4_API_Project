@@ -23,6 +23,12 @@ module.exports = {
 'FakeUser7',
     ]}
   });
+  
+await queryInterface.sequelize.query(
+  `ALTER SEQUENCE 
+  "${options.schema ? options.schema + '.' : ''}
+  Users_id_seq" RESTART WITH 1;`);
+
 
   await queryInterface.bulkInsert(options, [
       {
