@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ReviewFormModal from "../reviews/ReviewFormModal";
 import './SpotDetails.css';
 
 function SpotDetails() {
@@ -8,6 +9,11 @@ function SpotDetails() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mainImageIdx, setMainImageIdx] = useState(0);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+
+const currentUser = useSelector(state => state.session.user);
+
 
   useEffect(() => {
     fetch(`/api/spots/${spotId}`)
@@ -36,6 +42,12 @@ function SpotDetails() {
     const date = new Date(dateString);
     return date.toLocaleString('default', { month: 'long', year: 'numeric' });
   }
+
+const isOwner = currentUser && spot && spot.ownerId === currentUser.id;
+const hasReviewed = reviews.some(review => review.userId === currentUser?.id);
+const canPostReview = currentUser && !isOwner && !hasReviewed;
+
+
 
   return (
 <div className="spot-details-container">
@@ -94,6 +106,26 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
   </span>
    <span> · {spot.numReviews} reviews</span>
  </div>
+
+{canPostReview && (
+<button
+className="post-review-btn"
+onClick={() => setShowReviewModal(true)}
+>
+    Post Your Review
+</button>
+)}
+{showReviewModal && (
+<ReviewFormModal
+  spotId={spotId}
+  onClose={() => setShowReviewModal(false)}
+  onReviewSubmit={newReview => {
+  setReviews([newReview, ...reviews]);
+  setShowReviewModal(false);
+}}
+  />
+)}
+
    <div className="spot-reviews-list">
    {reviews.length > 0 ? (
     reviews.map(review => (
