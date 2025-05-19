@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createReview } from "../store/reviews";
 
-function ReviewFormModal({ spotId, onClose }) {
+function ReviewFormModal({ spotId, onClose, onReviewSubmit }) {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -24,12 +24,13 @@ return;
 }
 
 try {
-      await dispatch(createReview(spotId, { review, stars }));
-      onClose();
-    } catch (err) {
-      setErrors(err.errors || [err.message]);
-    }
-  };
+const newReview = await dispatch(createReview(spotId, { review, stars }));
+    if (onClose) onClose();
+    if (onReviewSubmit) onReviewSubmit(newReview);
+} catch (err) {
+setErrors(err.errors || [err.message]);
+}
+};
 
   return (
 <form onSubmit={handleSubmit}>
