@@ -8,9 +8,23 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Spots';
+
+const users = await queryInterface.sequelize.query(
+  `SELECT id, username FROM "${options.schema ? options.schema + '"."' : ''}Users" 
+  WHERE username IN (
+  'Demo-lition', 'FakeUser1', 'FakeUser2', 'FakeUser3', 
+  'FakeUser4', 'FakeUser5', 'FakeUser6', 'FakeUser7'
+);`
+);
+
+const userMap = {};
+  users[0].forEach(user => {
+  userMap[user.username] = user.id;
+});
+
     await queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
+        ownerId: userMap['Demo-lition'],
         address: '123 Main St',
         city: 'San Francisco',
         state: 'CA',
@@ -24,7 +38,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 2,
+        ownerId: userMap['FakeUser1'],
         address: '456 Beach Ave',
         city: 'Miami',
         state: 'FL',
@@ -38,7 +52,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 3,
+        ownerId: userMap['FakeUser2'],
         address: '789 Mountain Rd',
         city: 'Denver',
         state: 'CO',
@@ -52,7 +66,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 4,
+        ownerId: userMap['FakeUser3'],
         address: '420 Hogwarts Way',
         city: 'Los Angeles',
         state: 'CA',
@@ -66,7 +80,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 5,
+        ownerId: userMap['FakeUser4'],
         address: '222 BlueSky Dr',
         city: 'Denver',
         state: 'CO',
@@ -80,7 +94,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 6,
+        ownerId: userMap['FakeUser5'],
         address: '92 Foote st',
         city: 'Hilo',
         state: 'HI',
@@ -94,7 +108,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 7,
+        ownerId: userMap['FakeUser6'],
         address:'72 Mammoth Way',
         city: 'Yellowstone National Park',
         state: 'WY',
@@ -108,7 +122,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        ownerId: 8,
+        ownerId: userMap['FakeUser7'],
         address:'18 Descansos Dr.',
         city: 'La Cañada Flintridge',
         state: 'CA',
