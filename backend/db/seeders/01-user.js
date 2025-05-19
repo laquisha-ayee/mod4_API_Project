@@ -12,25 +12,25 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-  username: { [Op.in] : [
- 'Demo-lition',
- 'FakeUser1',
-'FakeUser2',
-'FakeUser3',
-'FakeUser4',
-'FakeUser5',
-'FakeUser6',
-'FakeUser7',
-    ]}
-  });
-  
-await queryInterface.sequelize.query(
-  `ALTER SEQUENCE 
-  "${options.schema ? options.schema + '.' : ''}
-  Users_id_seq" RESTART WITH 1;`);
+      username: { [Op.in]: [
+        'Demo-lition',
+        'FakeUser1',
+        'FakeUser2',
+        'FakeUser3',
+        'FakeUser4',
+        'FakeUser5',
+        'FakeUser6',
+        'FakeUser7',
+      ]}
+    });
 
+    if (process.env.NODE_ENV === 'production') {
+      await queryInterface.sequelize.query(
+        `ALTER SEQUENCE "${options.schema ? options.schema + '.' : ''}Users_id_seq" RESTART WITH 1;`
+      );
+    }
 
-  await queryInterface.bulkInsert(options, [
+    await queryInterface.bulkInsert(options, [
       {
         email: 'demo@user.io',
         username: 'Demo-lition',
