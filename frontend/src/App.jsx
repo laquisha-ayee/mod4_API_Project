@@ -12,7 +12,7 @@ import Footer from "./components/Footer/Footer";
 import CreateSpotForm from './spots/CreateSpotForm';
 import ManageSpots from './spots/ManageSpots';
 import EditSpotForm from './spots/EditSpotForm';
-import CurrentUserReviews from "./components/reviews/CurrentUserReviews";
+import CurrentUserReviews from "./reviews/CurrentUserReviews";
 
 
 function Layout() {

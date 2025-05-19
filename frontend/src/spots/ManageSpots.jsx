@@ -47,28 +47,11 @@ const handleCancelDelete = () => {
     setSpotToDelete(null);
 };
 
-const ConfirmDeleteModal = ({ onConfirm, onCancel }) => (
-<div className="modal-overlay">
-<div className="modal-content">
-    <h2>Confirm Delete</h2>
-<p>Are you sure you want to remove this spot from the listing?</p>
-<button className="delete-btn" onClick={onConfirm}>
-    Yes (Delete Spot)
-    </button>
-<button className="cancel-btn" onClick={onCancel}>
-    No (Keep Spot)
-</button>
-</div>
-</div>
-);
-
-
-  if (loading) return <div>Loading...</div>;
+if (loading) return <div>Loading...</div>;
 
   return (
   <div>
 <h2 className="center-header">Manage Spots</h2>
-
 <div className="spot-grid">
     {spots.length === 0 && <div>You have no spots yet.</div>}
     {spots.map(spot => (
@@ -108,17 +91,18 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }) => (
 </div>
     ))}
 </div>
-{showModal && (
-<ConfirmDeleteModal
-  onConfirm={handleConfirmDelete}
- onCancel={handleCancelDelete} 
-/>
+  {showModal && (
+<div className="modal-overlay">
+<div className="confirm-delete-modal">
+  <h2>Confirm Delete</h2>
+    <p>Are you sure you want to remove this spot from the listing?</p>
+<button className="yes-btn" onClick={handleConfirmDelete}>Yes (Delete Spot)</button>
+<button className="no-btn" onClick={handleCancelDelete}>No (Keep Spot)</button>
+</div>
+</div>
 )}
 </div>
 );
 }
-
-
-
 
 export default ManageSpots;

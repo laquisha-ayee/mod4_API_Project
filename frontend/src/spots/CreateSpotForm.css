@@ -85,7 +85,7 @@
     margin-top: -5px;
     font-weight: 500;
 }
-.edit-btn, .delete-btn {
+.edit-btn {
   padding: 6px 18px;
   font-weight: bold;
   border: 1px solid black;
@@ -94,4 +94,28 @@
   color: black;
   cursor: pointer;
   margin-bottom: 8px;
+}
+.edit-btn:hover {
+  background: #e75480;
+  color: white;
+  border-color: #e75480;
+}
+
+.delete-btn {
+  background: antiquewhite;
+  color: black;
+  border: 1px solid black;
+  border-radius: 0px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+.delete-btn:hover {
+  background: #e75480;
+  color: white;
+  border-color: #e75480;
 }
