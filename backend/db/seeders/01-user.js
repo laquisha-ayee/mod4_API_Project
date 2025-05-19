@@ -10,7 +10,21 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Users';
-    await queryInterface.bulkInsert(options, [
+    const Op = Sequelize.Op;
+    await queryInterface.bulkDelete(options, {
+  username: { [Op.in] : [
+ 'Demo-lition',
+ 'FakeUser1',
+'FakeUser2',
+'FakeUser3',
+'FakeUser4',
+'FakeUser5',
+'FakeUser6',
+'FakeUser7',
+    ]}
+  });
+
+  await queryInterface.bulkInsert(options, [
       {
         email: 'demo@user.io',
         username: 'Demo-lition',
