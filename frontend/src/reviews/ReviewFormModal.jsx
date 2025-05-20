@@ -5,9 +5,8 @@ import './CurrentUserButtons.css';
 
 function ReviewFormModal({ spotId, review, onClose, onReviewSubmit }) {
   const dispatch = useDispatch();
-  const [reviewText, setReviewText] = useState(review ? review.review : "");
-  const [stars, setStars] = useState(review ? review.stars : 0);
-  const [hoverStars, setHoverStars] = useState(0);
+  const [review, setReview] = useState("");
+  const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -51,18 +50,7 @@ setErrors(err.errors || [err.message]);
 };
 
 
-return (
-<div className="review-modal">
-<button
-type="button"
-onClick={onClose}
-className="close-modal-btn"
-aria-label="Close"
-style={{ position: "absolute", top: "16px", right: "16px", background: "transparent", border: "none", fontSize: "1.5rem", cursor: "pointer" }}
->
-  &times;
-</button>
-
+  return (
 <form onSubmit={handleSubmit}>
 <h2>
   {review

@@ -4,7 +4,8 @@ import { csrfFetch } from '../store/csrf';
 import './CreateSpotForm.css';
 
 function isValidImageUrl(url) {
-  return /\.(png|jpg|jpeg)$/i.test(url);
+  const cleanUrl = url.split('?')[0];
+  return /\.(png|jpg|jpeg)$/i.test(cleanUrl);
 }
 
 function CreateSpotForm() {
