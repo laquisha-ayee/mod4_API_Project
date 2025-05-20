@@ -104,9 +104,11 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
 
  <div className="spot-reviews-section">
    <div className="spot-reviews-header">
- <span className="spot-rating">
- &#9733; {spot.avgStarRating ? Number(spot.avgStarRating).toFixed(2) : "New"} · {spot.numReviews} reviews
-  </span>
+<span className="spot-rating">
+  &#9733; {typeof spot.avgStarRating === "number"
+    ? spot.avgStarRating.toFixed(2)
+    : "New"} · {spot.numReviews} reviews
+</span>
    <span> · {spot.numReviews} reviews</span>
  </div>
 
