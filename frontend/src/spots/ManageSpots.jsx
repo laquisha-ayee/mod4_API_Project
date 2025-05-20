@@ -85,7 +85,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }) => (
 <div className="spot-location">
     {spot.city}, {spot.state}
 <span className="spot-rating">
-   &#9733; {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}
+  &#9733; {typeof spot.avgRating === "number" ? spot.avgRating.toFixed(2) : "New"}
 </span>
 </div>
                 
