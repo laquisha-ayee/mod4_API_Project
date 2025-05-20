@@ -82,9 +82,11 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
 <div className="spot-sidebar">
    <div className="spot-price-rating">
 <span className="spot-price">${spot.price} <span className="per-night">night</span></span>
-  <span className="spot-rating">
- &#9733;      {typeof spot.avgRating === "number" ? spot.avgRating.toFixed(2) : "New"}
-    </span>
+<span className="spot-rating">
+  &#9733; {typeof spot.avgStarRating === "number"
+    ? spot.avgStarRating.toFixed(2)
+    : "New"} · {spot.numReviews} reviews
+</span>
       </div>
    <button
  className="reserve-btn"
