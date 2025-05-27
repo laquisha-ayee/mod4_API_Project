@@ -1,3 +1,96 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: antiquewhite;
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  min-width: 350px;
+  max-width: 90vw;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #e75480;
+  cursor: pointer;
+}
+
+.review-form-modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-errors {
+  color: red;
+  margin-bottom: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.modal-textarea {
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+.star-row {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-submit-btn {
+  background: #ff6f6f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+
+.modal-submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.delete-review-btn {
+  margin-top: 1rem;
+  background: pink;
+  color: antiquewhite;
+  border: solid lightgray;
+  border-radius: 6px;
+  padding: 6px 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+.delete-review-btn:hover {
+  background: #e75480;
+}
+
 .user-reviews-container {
     max-width: 700px;
     margin: 40px auto;

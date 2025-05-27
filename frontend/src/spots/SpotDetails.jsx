@@ -32,12 +32,25 @@ const currentUser = useSelector(state => state.session.user);
       });
   }, [spotId]);
 
+const handleDeleteReview = async (reviewId) => {
+  if (!window.confirm("Are you sure you want to delete this review?")) return;
+const res = await fetch(`/api/reviews/${reviewId}`, { method: "DELETE" });
+  if (res.ok) {
+setReviews(reviews.filter(r => r.id !== reviewId));
+const spotRes = await fetch(`/api/spots/${spotId}`);
+  if (spotRes.ok) {
+const updatedSpot = await spotRes.json();
+  setSpot(updatedSpot);
+}
+ }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!spot) return <div>Spot not found.</div>;
 
-  const images = spot.SpotImages || [];
-  const mainImage = images[mainImageIdx];
-  const otherImages = images.filter((img, idx) => idx !== mainImageIdx).slice(0, 4);
+const images = spot.SpotImages || [];
+const mainImage = images[mainImageIdx];
+const otherImages = images.filter((img, idx) => idx !== mainImageIdx).slice(0, 4);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -81,21 +94,23 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
 </div>
 <div className="spot-sidebar">
    <div className="spot-price-rating">
-<span className="spot-price">${spot.price} <span className="per-night">night</span></span>
+<span className="spot-price">
+  ${spot.price} 
+<span className="per-night">night</span></span>
+
 <span className="spot-rating">
   &#9733; {typeof spot.avgStarRating === "number"
     ? spot.avgStarRating.toFixed(2)
     : "New"} · {spot.numReviews} reviews
 </span>
-      </div>
+  
+</div>
    <button
  className="reserve-btn"
- onClick={() => alert("Feature Coming Soon...")}
->
-
- Reserve
+ onClick={() => alert("Feature Coming Soon...")}>
+Reserve
  </button>
-   </div>
+</div>
   </div>
   <div className="spot-host">
     Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}
@@ -109,7 +124,6 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
     ? spot.avgStarRating.toFixed(2)
     : "New"} · {spot.numReviews} reviews
 </span>
-   <span> · {spot.numReviews} reviews</span>
  </div>
 
 {canPostReview && (
@@ -124,11 +138,17 @@ onClick={() => setShowReviewModal(true)}
 <ReviewFormModal
   spotId={spotId}
   onClose={() => setShowReviewModal(false)}
-  onReviewSubmit={newReview => {
-  setReviews([newReview, ...reviews]);
-  setShowReviewModal(false);
-}}
-  />
+  onReviewSubmit={async newReview => {
+    setReviews([newReview, ...reviews]);
+    setShowReviewModal(false);
+
+const res = await fetch(`/api/spots/${spotId}`);
+  if (res.ok) {
+const updatedSpot = await res.json();
+  setSpot(updatedSpot);
+}
+  }}
+/>
 )}
 
    <div className="spot-reviews-list">
@@ -138,6 +158,13 @@ onClick={() => setShowReviewModal(true)}
    <div className="review-author">{review.User?.firstName || "Unknown User"}</div>
    <div className="review-date">{formatDate(review.createdAt)}</div>
    <div className="review-text">{review.review}</div>
+   {review.userId === currentUser?.id && (
+  <button
+    className="delete-review-btn"
+    onClick={() => handleDeleteReview(review.id)}>
+    Delete
+  </button>
+)}
  </div>
    ))
  ) : (

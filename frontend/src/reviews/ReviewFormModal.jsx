@@ -48,47 +48,55 @@ function ReviewFormModal({ spotId, review, onClose, onReviewSubmit }) {
     }
   };
 
-  return (
-    <div className="review-modal">
-      <form onSubmit={handleSubmit}>
-        <h2>
-          {review
-            ? `How was your stay at ${review?.Spot?.name || "this spot"}?`
-            : "How was your stay?"}
-        </h2>
-        {errors.length > 0 && <ul>{errors.map((e, i) => <li key={i}>{e}</li>)}</ul>}
-        <textarea
-          value={reviewText}
-          onChange={e => setReviewText(e.target.value)}
-          placeholder="Leave your review here..."
-          required
-        />
 
-        <div className="star-row">
-          {[1, 2, 3, 4, 5].map(num => (
-            <span
-              key={num}
-              style={{
-                cursor: "pointer",
-                color: (hoverStars || stars) >= num ? "#e75480" : "#ccc",
-                fontSize: "2rem"
-              }}
-              onMouseEnter={() => setHoverStars(num)}
-              onMouseLeave={() => setHoverStars(0)}
-              onClick={() => setStars(num)}
-            >&#9733;</span>
-          ))}
-          <span style={{ fontSize: "1rem", marginLeft: "8px" }}>Stars</span>
-        </div>
-        <button
-          type="submit"
-          disabled={reviewText.length < 10 || stars < 1}
-        >
-          {review ? "Update Your Review" : "Submit Your Review"}
-        </button>
-      </form>
-    </div>
-  );
-}
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-content" onClick={e => e.stopPropagation()}>
+  <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">&times;</button>
+      <form onSubmit={handleSubmit} className="review-form-modal-form">
+        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>
+  {review
+  ? `How was your stay at ${review?.Spot?.name || "this spot"}?`
+  : "How was your stay?"}
+        </h2>
+
+{errors.length > 0 && <ul className="modal-errors">{errors.map((e, i) => <li key={i}>{e}</li>)}</ul>}
+  <textarea
+    value={reviewText}
+    onChange={e => setReviewText(e.target.value)}
+    placeholder="Leave your review here..."
+    required
+    className="modal-textarea"
+/>
+
+  <div className="star-row">
+      {[1, 2, 3, 4, 5].map(num => (
+    <span
+      key={num}
+      style={{
+    cursor: "pointer",
+    color: (hoverStars || stars) >= num ? "#e75480" : "#ccc",
+    fontSize: "2rem"
+  }}
+   onMouseEnter={() => setHoverStars(num)}
+   onMouseLeave={() => setHoverStars(0)}
+   onClick={() => setStars(num)}
+>&#9733;</span>
+))}
+<span style={{ fontSize: "1rem", marginLeft: "8px" }}>Stars</span>
+  </div>
+          
+<button
+  type="submit"
+  disabled={reviewText.length < 10 || stars < 1}
+  className="modal-submit-btn"
+  >
+{review ? "Update Your Review" : "Submit Your Review"}
+</button>
+  </form>
+  </div>
+  </div>
+);
+ }
 
 export default ReviewFormModal;
