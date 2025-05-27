@@ -4,10 +4,18 @@ import { csrfFetch } from '../store/csrf';
 import './CreateSpotForm.css';
 
 
+//[regexMethod]
+//function isValidImageUrl(url) {
+//  return /\.(png|jpg|jpeg)$/i.test(url);
+//}
 function isValidImageUrl(url) {
-  return /\.(png|jpg|jpeg)$/i.test(url);
+  const urlWithoutQuery = url.split('?')[0];
+  return (
+    urlWithoutQuery.endsWith('.png') ||
+    urlWithoutQuery.endsWith('.jpg') ||
+    urlWithoutQuery.endsWith('.jpeg')
+  );
 }
-
 
 function EditSpotForm() {
   const { spotId } = useParams();

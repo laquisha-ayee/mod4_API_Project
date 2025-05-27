@@ -134,10 +134,10 @@ onClick={() => setShowReviewModal(true)}
    <div className="spot-reviews-list">
    {reviews.length > 0 ? (
     reviews.map(review => (
-     <div key={review.id} className="spot-review">
-   <div className="review-author">{review.User.firstName}</div>
+   <div key={review.id} className="spot-review">
+   <div className="review-author">{review.User?.firstName || "Unknown User"}</div>
    <div className="review-date">{formatDate(review.createdAt)}</div>
-     <div className="review-text">{review.review}</div>
+   <div className="review-text">{review.review}</div>
  </div>
    ))
  ) : (

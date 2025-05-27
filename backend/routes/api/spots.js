@@ -551,14 +551,24 @@ router.post(
         });
       }
 
-      const newReview = await Review.create({
-        userId: req.user.id,
-        spotId,
-        review,
-        stars,
-      });
+const newReview = await Review.create({
+  userId: req.user.id,
+  spotId,
+  review,
+  stars,
+});
 
-      return res.status(201).json(newReview);
+const reviewWithUser = await Review.findByPk(newReview.id, {
+  include: [
+    {
+    model: User,
+    attributes: ["id", "firstName", "lastName"],
+}
+ ]
+  });
+
+return res.status(201).json(reviewWithUser);
+
     } catch (error) {
       next(error);
     }
