@@ -58,15 +58,15 @@ if (!res.ok) throw await res.json();
 };
 
 export const updateReview = (reviewId, reviewData) => async dispatch => {
-const res = await fetch(`/api/reviews/${reviewId}`, {
+const res = await csrfFetch(`/api/reviews/${reviewId}`, {
   method: 'PUT',
-  body: JSON.stringify(reviewData) 
+  body: JSON.stringify(reviewData)
 });
 
 if (!res.ok) throw await res.json();
-  const updatedReview = await res.json();
+const updatedReview = await res.json();
 dispatch({ type: 'UPDATE_REVIEW', review: updatedReview });
-return updatedReview;
+  return updatedReview;
 };
 
 
