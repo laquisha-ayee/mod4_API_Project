@@ -36,6 +36,7 @@ const toggleMenu = () => setShowMenu(prev => !prev);
     e.preventDefault();
     dispatch(sessionActions.logout());
     setShowMenu(false);
+    navigate('/');
   };
 
   return (
@@ -63,8 +64,13 @@ alt="Profile"
 </>
   ) : (
 <>
+
+<li className="profile-user-info">
+  <div>Hello, {user.firstName}</div>
+  <div>{user.email}</div>
+</li>
   <li>
-    <button onClick={() => {
+<button onClick={() => {
   navigate('/spots/current');
   setShowMenu(false);
 }}>
@@ -80,7 +86,7 @@ alt="Profile"
  </button>
     </li>
  <li>
-  <button onClick={logout}>
+  <button className="logout-btn" onClick={logout}>
       Log Out
   </button>
   </li>

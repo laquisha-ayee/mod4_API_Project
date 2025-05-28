@@ -89,7 +89,7 @@ gap: 24px;
   position: absolute;
   top: 120%;
   right: 0;
-  background: antiquewhite;
+  background: white;
   border: none;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -120,4 +120,29 @@ gap: 24px;
 }
 .profile-dropdown li:not(:last-child) {
   border-bottom: 1px solid #eee;
+}
+
+.profile-user-info {
+  padding: 8px 16px;
+  border-bottom: 1px solid antiquewhite;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: lightcoral;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  padding: 8px 24px;
+  margin: 16px auto 8px auto;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: block;
+  width: 80%;
+  text-align: center;
+}
+.logout-btn:hover {
+  background: #e75480;
 }

@@ -113,38 +113,28 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
   }
 });
 
-//Delete a review
+
 // DELETE a review (FIXED)
 router.delete("/:reviewId", requireAuth, async (req, res, next) => {
-  try {
-    const { reviewId } = req.params;
-    const { user } = req;
+try {
+  const { reviewId } = req.params;
+  const { user } = req;
+  const review = await Review.findByPk(reviewId);
+if (!review) {
+  return res.status(404).json({ message: "Review couldn't be found" });
+}
 
-    // FIX: Find the review using Review model, NOT Spot!
-    const review = await Review.findByPk(reviewId);
+if (review.userId !== user.id) {
+  return res.status(403).json({ message: "Forbidden" });
+}
+await review.destroy();
 
-    if (!review) {
-      return res.status(404).json({
-        message: "Review couldn't be found",
-      });
-    }
+return res.status(200).json({ message: "Successfully deleted" });
+} catch (error) {
+  next(error);
+}
+ });
 
-    // FIX: Check if the user is the **review owner**, not the spot owner
-    if (review.userId !== user.id) {
-      return res.status(403).json({
-        message: "Forbidden",
-      });
-    }
-
-    await review.destroy();
-
-    return res.status(200).json({
-      message: "Successfully deleted",
-    });
-  } catch (error) {
-    next(error);
-  }
-});
 
 // Edit A Review
 router.put(
