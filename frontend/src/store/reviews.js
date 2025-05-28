@@ -60,7 +60,6 @@ if (!res.ok) throw await res.json();
 export const updateReview = (reviewId, reviewData) => async dispatch => {
 const res = await fetch(`/api/reviews/${reviewId}`, {
   method: 'PUT',
-  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(reviewData) 
 });
 
@@ -72,11 +71,18 @@ return updatedReview;
 
 
 
-export const deleteReview = (spotId, reviewId) => async dispatch => {
-  await csrfFetch(`/api/reviews/${reviewId}`, { method: 'DELETE' });
-  dispatch(removeReview(spotId, reviewId));
-};
-
+export const deleteReview = (spotId, reviewId) => async (dispatch) => {
+const res = await fetch(`/api/reviews/${reviewId}`, {
+  method: "DELETE",
+  credentials: "include"
+});
+  if (res.ok) {
+  dispatch(removeReview(spotId,reviewId));
+  return true;
+} else {
+  return false;
+}
+ };
 
 
 const initialState = {};
