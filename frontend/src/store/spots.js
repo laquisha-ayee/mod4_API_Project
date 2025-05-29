@@ -27,6 +27,13 @@ const removeSpot = (spotId) => ({
 });
 
 
+export const fetchSpotDetails = (spotId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`);
+  const data = await res.json();
+  dispatch(updateSpot(data)); 
+  return data;
+};
+
 export const fetchSpots = () => async (dispatch) => {
 const res = await csrfFetch('/api/spots');
 const data = await res.json();
@@ -42,6 +49,14 @@ const data = await res.json();
 dispatch(addSpot(data));
   return data;
 };
+
+export const fetchCurrentUserSpots = () => async (dispatch) => {
+  const res = await csrfFetch('/api/spots/current');
+  const data = await res.json();
+  dispatch(loadSpots(data.Spots));
+  return data.Spots;
+};
+
 
 export const editSpot = (spotId, spotData) => async (dispatch) => {
 const res = await csrfFetch(`/api/spots/${spotId}`, {

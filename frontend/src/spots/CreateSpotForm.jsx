@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { csrfFetch } from '../store/csrf'; 
+import { useDispatch } from "react-redux";
+import { createSpot } from '../store/spots'; 
 import './CreateSpotForm.css';
 
-function isValidImageUrl(url) {
-  const cleanUrl = url.split('?')[0];
-  return /\.(png|jpg|jpeg)$/i.test(cleanUrl);
-}
+function isValidImageUrl(url) {  
+const cleanUrl = url.split('?')[0];
+const ending = cleanUrl.slice(-4).toLowerCase();
+return (
+  ending === '.png' ||
+ending === '.jpg' ||
+cleanUrl.slice(-5).toLowerCase() === '.jpeg'
+);
+ }
+
 
 function CreateSpotForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [stateVal, setStateVal] = useState("");
   const [country, setCountry] = useState("");    
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
@@ -35,7 +43,7 @@ function CreateSpotForm() {
     if (!country) newErrors.country = "Country is required";
     if (!address) newErrors.address = "Address is required";
     if (!city) newErrors.city = "City is required";
-    if (!state) newErrors.state = "State is required";
+    if (!stateVal) newErrors.state = "State is required";
     if (description.length < 30) newErrors.description = "Description needs a minimum of 30 characters";
     if (!name) newErrors.name = "Name is required";
     if (!price) newErrors.price = "Price is required";
@@ -56,7 +64,7 @@ function CreateSpotForm() {
     const spotData = {
       address, 
       city, 
-      state, 
+      state: stateVal, 
       country, 
       lat, 
       lng, 
@@ -65,34 +73,31 @@ function CreateSpotForm() {
       price
     };
 
-try {
-  const res = await csrfFetch("/api/spots", {
-  method: "POST",
-  body: JSON.stringify(spotData),
-});
 
-const data = await res.json();
+try {
+const data = await dispatch(createSpot(spotData));
 const imageUrls = [previewImage, image2, image3, image4, image5].filter(Boolean);
-for (let i = 0; i < imageUrls.length; i++) {
-  await csrfFetch(`/api/spots/${data.id}/images`, {
+  for (let i = 0; i < imageUrls.length; i++) {
+await fetch(`/api/spots/${data.id}/images`, {
 method: "POST",
+headers: { "Content-Type": "application/json" },
 body: JSON.stringify({
 url: imageUrls[i],
 preview: i === 0
 }),
-  });
-    }
+ });
+   }
 
-    navigate(`/spots/${data.id}`);
+   navigate(`/spots/${data.id}`);
 } catch (err) {
-  if (err.json) {
+if (err.json) {
 const data = await err.json();
-setErrors(data.errors ? Object.values(data.errors) : [data.message || "Something went wrong"]);
-   } else {
-setErrors(["Network error"]);
+  setErrors(data.errors ? Object.values(data.errors) : [data.message || "Something went wrong"]);
+} else {
+  setErrors(["Network error"]);
 }
-  }
-    };
+ }
+  };
 
 return (
 <form onSubmit={handleSubmit} className="create-spot-form">
@@ -122,7 +127,7 @@ Country
  </label>
 <label style={{flex: 1}}>
   State
-<input value={state} onChange={e => setState(e.target.value)} placeholder="State" required />
+<input value={stateVal} onChange={e => setStateVal(e.target.value)} placeholder="State" required />
   </label>
 </div>
 

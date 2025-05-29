@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteReview } from "../store/reviews";
 
-function ReviewList({ spotId, reviews }) {
+function ReviewList({ spotId }) {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.session.user);
+  const reviews = useSelector(state => state.reviews[spotId] || []);
 
   const handleDelete = (reviewId) => {
     dispatch(deleteReview(spotId, reviewId));

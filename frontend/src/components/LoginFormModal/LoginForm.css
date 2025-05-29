@@ -1,5 +1,5 @@
 .login-modal {
-    background: #ff95a7;
+    background: url('https://images.pexels.com/photos/907485/pexels-photo-907485.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover no-repeat;
     border-radius: 0;
     box-shadow: 0 4px 32px rgba(0,0,0,0.18);
     max-width: 300px;
@@ -22,7 +22,7 @@
 
 
 .login-modal h1 {
-    color: antiquewhite;
+    color: black;
     font-size: 2rem;
     margin-bottom: 24px;
     text-align: center;
@@ -53,7 +53,7 @@
   .login-modal button[type="submit"] {
     background: #ff5a5f;
     color: #fff;
-    border: none;
+    border: solid;
     border-radius: 6px;
     padding: 10px 0;
     font-size: 1.1rem;

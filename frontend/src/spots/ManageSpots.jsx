@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import './SpotList.css'; 
-import { csrfFetch } from "../store/csrf";
+import { fetchCurrentUserSpots, deleteSpot } from "../store/spots";
 
 function ManageSpots() {
-  const [spots, setSpots] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [spotToDelete, setSpotToDelete] = useState(null);
-  const navigate = useNavigate();
- 
 
-useEffect(() => {
-    fetch("/api/spots/current")
-.then(res => res.json())
-.then(data => {
-    setSpots(Array.isArray(data.Spots) ? data.Spots : []);
-    setLoading(false);
-      });
-  }, 
-  []);
+const dispatch = useDispatch();
+const navigate = useNavigate();
+
+const spotsObj = useSelector(state => state.spots);
+const spots = Object.values(spotsObj);
+
+const [loading, setLoading] = useState(true);
+const [showModal, setShowModal] = useState(false);
+const [spotToDelete, setSpotToDelete] = useState(null);
+
+ 
+  useEffect(() => {
+    dispatch(fetchCurrentUserSpots()).then(() => setLoading(false));
+  }, [dispatch]);
 
 const handleDeleteClick = (spotId) => {
     setSpotToDelete(spotId);
@@ -27,14 +27,13 @@ const handleDeleteClick = (spotId) => {
 };
 
 const handleConfirmDelete = async () => {
-    try {
-await csrfFetch(`/api/spots/${spotToDelete}`, { method: "DELETE" });
-setSpots(spots.filter(spot => spot.id !== spotToDelete));
+try {
+  await dispatch(deleteSpot(spotToDelete));
 setShowModal(false);
 setSpotToDelete(null);
- if (spots.length === 1) {
-        navigate('/spots');
-  }
+if (spots.length === 1) {
+navigate('/spots');
+}
 } catch (err) {
 alert("Failed to delete spot.");
 setShowModal(false);

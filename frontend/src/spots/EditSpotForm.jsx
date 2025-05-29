@@ -1,31 +1,30 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { csrfFetch } from '../store/csrf'; 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSpotDetails, editSpot } from '../store/spots'; // adjust path if needed
 import './CreateSpotForm.css';
 
 
-//[regexMethod]
-//function isValidImageUrl(url) {
-//  return /\.(png|jpg|jpeg)$/i.test(url);
-//}
+
 function isValidImageUrl(url) {
-  const urlWithoutQuery = url.split('?')[0];
+const urlWithoutQuery = url.split('?')[0];
   return (
-    urlWithoutQuery.endsWith('.png') ||
-    urlWithoutQuery.endsWith('.jpg') ||
-    urlWithoutQuery.endsWith('.jpeg')
-  );
+urlWithoutQuery.endsWith('.png') ||
+urlWithoutQuery.endsWith('.jpg') ||
+urlWithoutQuery.endsWith('.jpeg')
+ );
 }
 
 function EditSpotForm() {
   const { spotId } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
+const spot = useSelector(state => state.spots[spotId]);
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [stateVal, setStateVal] = useState("");
   const [country, setCountry] = useState("");    
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
@@ -40,104 +39,85 @@ function EditSpotForm() {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    async function fetchSpot() {
-      const res = await fetch(`/api/spots/${spotId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setAddress(data.address || "");
-        setCity(data.city || "");
-        setState(data.state || "");
-        setCountry(data.country || "");
-        setLat(data.lat || "");
-        setLng(data.lng || "");
-        setName(data.name || "");
-        setDescription(data.description || "");
-        setPrice(data.price || "");
+    dispatch(fetchSpotDetails(spotId));
+  }, [dispatch, spotId]);
 
-if (data.SpotImages && data.SpotImages.length > 0) {
-    const preview = data.SpotImages.find(img => img.preview);
-    setPreviewImage(preview ? preview.url : data.SpotImages[0].url);
-
-const others = data.SpotImages.filter(img => !img.preview);
-    setImage2(others[0]?.url || "");
-    setImage3(others[1]?.url || "");
-    setImage4(others[2]?.url || "");
-    setImage5(others[3]?.url || "");
-  }
-  setLoading(false);
-} else {
-  setErrors(["Failed to load spot data."]);
-  setLoading(false);
-  }
+useEffect(() => {
+if (spot) {
+  setAddress(spot.address || "");
+  setCity(spot.city || "");
+  setStateVal(spot.state || "");
+  setCountry(spot.country || "");
+  setLat(spot.lat || "");
+  setLng(spot.lng || "");
+  setName(spot.name || "");
+  setDescription(spot.description || "");
+  setPrice(spot.price || "");
+if (spot.SpotImages && spot.SpotImages.length > 0) {
+const preview = spot.SpotImages.find(img => img.preview);
+  setPreviewImage(preview ? preview.url : spot.SpotImages[0].url);
+const others = spot.SpotImages.filter(img => !img.preview);
+  setImage2(others[0]?.url || "");
+  setImage3(others[1]?.url || "");
+  setImage4(others[2]?.url || "");
+  setImage5(others[3]?.url || "");
 }
-fetchSpot();
-  }, [spotId]);
+setLoading(false);
+}
+}, [spot]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors([]);
-    const newErrors = {};
-
-    if (!country) newErrors.country = "Country is required";
-    if (!address) newErrors.address = "Address is required";
-    if (!city) newErrors.city = "City is required";
-    if (!state) newErrors.state = "State is required";
-    if (description.length < 30) newErrors.description = "Description needs a minimum of 30 characters";
-    if (!name) newErrors.name = "Name is required";
-    if (!price) newErrors.price = "Price is required";
-    if (!previewImage) newErrors.previewImage = "Preview image is required";
-    if (previewImage && !isValidImageUrl(previewImage)) newErrors.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setErrors([]);
+const newErrors = {};
+if (!country) newErrors.country = "Country is required";
+if (!address) newErrors.address = "Address is required";
+if (!city) newErrors.city = "City is required";
+if (!stateVal) newErrors.state = "State is required";
+if (description.length < 30) newErrors.description = "Description needs a minimum of 30 characters";
+if (!name) newErrors.name = "Name is required";
+if (!price) newErrors.price = "Price is required";
+ if (!previewImage) newErrors.previewImage = "Preview image is required";
+if (previewImage && !isValidImageUrl(previewImage)) newErrors.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
 
 [image2, image3, image4, image5].forEach((img, idx) => {
   if (img && !isValidImageUrl(img)) {
 newErrors[`image${idx+2}`] = "Image URL must end in .png, .jpg, or .jpeg";
 }
-    });
-
-if (Object.keys(newErrors).length) {
-  setErrors(Object.values(newErrors));
-return;
-}
-
-    const spotData = {
-      address, 
-      city, 
-      state, 
-      country, 
-      lat, 
-      lng, 
-      name, 
-      description, 
-      price
-    };
-
-try {
-  const res = await csrfFetch(`/api/spots/${spotId}`, {
-method: "PUT",
-body: JSON.stringify(spotData),
 });
 
-if (!res.ok) {
-  const data = await res.json();
-setErrors(data.errors ? Object.values(data.errors) : [data.message || "Something went wrong"]);
-
+if (Object.keys(newErrors).length) {
+setErrors(Object.values(newErrors));
 return;
 }
 
-  navigate(`/spots/${spotId}`);
+const spotData = {
+  address, 
+  city, 
+  state: stateVal, 
+  country, 
+  lat, 
+  lng, 
+  name, 
+  description, 
+   price
+ };
+
+try {
+await dispatch(editSpot(spotId, spotData));
+navigate(`/spots/${spotId}`);
 } catch (err) {
   if (err.json) {
 const data = await err.json();
- setErrors(data.errors ? Object.values(data.errors) : [data.message || "Something went wrong"]);
+  setErrors(data.errors ? Object.values(data.errors) : [data.message || "Something went wrong"]);
 } else {
 setErrors(["Network error"]);
-      }
-    }
+}
+ }
   };
 
-  if (loading) return <div>Loading...</div>;
+if (loading) return <div>Loading...</div>;
 
 return (
 <form onSubmit={handleSubmit} className="create-spot-form">
@@ -166,7 +146,7 @@ Street Address
 </label>
 <label style={{flex: 1}}>
   State
-<input value={state} onChange={e => setState(e.target.value)} placeholder="State" required />
+ <input value={stateVal} onChange={e => setStateVal(e.target.value)} placeholder="State" required />
 </label>
    </div>
 <div style={{ display: "flex", gap: "8px", marginTop: "18px" }}>

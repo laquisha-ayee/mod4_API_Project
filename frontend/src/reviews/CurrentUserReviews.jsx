@@ -1,37 +1,36 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { deleteReview } from "../store/reviews";
-import ReviewFormModal from "./ReviewFormModal"
+import { useDispatch, useSelector } from "react-redux";
+import { deleteReview, fetchCurrentUserReviews } from "../store/reviews";
+import ReviewFormModal from "./ReviewFormModal";
 import './CurrentUserButtons.css';
 
 
 function formatDate(dateString) {
 const date = new Date(dateString);
-    return date.toLocaleString('default', 
-    {month: 'long', year: 'numeric'});
+  return date.toLocaleString('default', { month: 'long', year: 'numeric' });
 }
 
 function CurrentUserReviews() {
-const [reviews, setReviews] = useState([]);
+
+const dispatch = useDispatch();
 const [showUpdateModal, setShowUpdateModal] = useState(false);
 const [reviewToEdit, setReviewToEdit] = useState(null);
-const dispatch = useDispatch();
+
+const reviews = useSelector(state => state.reviews.userReviews || []);
 
 useEffect(() => {
-fetch('/api/reviews/current')
-    .then(res => res.json())
-    .then(data => setReviews(data.Reviews || []));
-}, []);
+dispatch(fetchCurrentUserReviews());
+}, [dispatch]);
 
 const handleDelete = async (spotId, reviewId) => {
 if (window.confirm("Are you sure you want to delete this review?")) {
-    await dispatch(deleteReview(spotId, reviewId));
-  setReviews(reviews.filter(r => r.id !== reviewId));
-}
-};
+await dispatch(deleteReview(spotId, reviewId));
+ }
+  };
+
 const handleUpdate = (review) => {
-    setReviewToEdit(review);
-    setShowUpdateModal(true);
+setReviewToEdit(review);
+setShowUpdateModal(true);
 };
 
 return (
