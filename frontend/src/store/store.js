@@ -2,12 +2,16 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import {thunk} from 'redux-thunk';
 import sessionReducer from './session';
-
-
+import reviewsReducer from './reviews';
+import csrfReducer from './csrf';
+import spotsReducer from './spots';
 
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  reviews: reviewsReducer,
+  csrf: csrfReducer,
+  spots: spotsReducer,
 });
 
 let enhancer;

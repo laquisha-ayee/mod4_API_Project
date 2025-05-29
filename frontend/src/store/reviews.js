@@ -1,20 +1,9 @@
 import { csrfFetch } from './csrf';
 
-//export const updateReview = (reviewId, reviewData) => async dispatch => {
-//const res = await csrfFetch(`/api/reviews/${reviewId}`, {
-//  method: 'PUT',
-//  headers: { 'Content-Type': 'application/json' },
-//  body: JSON.stringify(reviewData)
-//});
-
-
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS';
 const ADD_REVIEW = 'reviews/ADD_REVIEW';
 const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW';
 const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW';
-
-
-
 
 
 const loadReviews = (spotId, reviews) => ({
@@ -73,8 +62,7 @@ dispatch({ type: 'UPDATE_REVIEW', review: updatedReview });
 
 export const deleteReview = (spotId, reviewId) => async (dispatch) => {
 const res = await fetch(`/api/reviews/${reviewId}`, {
-  method: "DELETE",
-  credentials: "include"
+  method: "DELETE"
 });
   if (res.ok) {
   dispatch(removeReview(spotId,reviewId));
