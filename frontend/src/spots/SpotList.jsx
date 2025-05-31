@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchSpots } from "../store/spots"; 
@@ -8,17 +8,18 @@ import './SpotList.css';
 
 function SpotList() {
   const dispatch = useDispatch();
-
   const spotsObj = useSelector(state => state.spots);
-  const spots = Object.values(spotsObj);
+  const spots = Object.values(spotsObj).filter(spot => spot && spot.id);
 
-  const loading = spots.length === 0;
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  dispatch(fetchSpots());
-}, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchSpots()).then(() => setLoading(false));
+  }, [dispatch]);
 
-if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (!spots.length) return <div>No spots found.</div>;
+
 return (
 <div className="spot-grid">
   {spots.map(spot => {

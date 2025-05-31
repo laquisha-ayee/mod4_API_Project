@@ -35,9 +35,9 @@ export const fetchSpotDetails = (spotId) => async (dispatch) => {
 };
 
 export const fetchSpots = () => async (dispatch) => {
-const res = await csrfFetch('/api/spots');
-const data = await res.json();
-  dispatch(loadSpots(data.spots));
+  const res = await csrfFetch('/api/spots');
+  const data = await res.json();
+  dispatch(loadSpots(data.Spots || [])); 
 };
 
 export const createSpot = (spotData) => async (dispatch) => {
@@ -79,13 +79,17 @@ const initialState = {};
 
 export default function spotsReducer(state = initialState, action) {
 switch (action.type) {
+
 case LOAD_SPOTS: {
-    const newState = {};
+  const newState = {};
+  if (Array.isArray(action.spots)) {
     action.spots.forEach(spot => {
-    newState[spot.id] = spot;
-});
-return newState;
+      newState[spot.id] = spot;
+    });
+  }
+  return newState;
 }
+
 case ADD_SPOT:
 case UPDATE_SPOT: {
     return {
@@ -93,6 +97,7 @@ case UPDATE_SPOT: {
 [action.spot.id]: action.spot,
 };
   }
+
 case REMOVE_SPOT: {
 const newState = { ...state };
 delete newState[action.spotId];

@@ -65,12 +65,14 @@ if (response.ok) {
     }
 };
 
-export const logout = () => async (dispatch) => {
-  const response = await csrfFetch('/api/session', {
-    method: 'DELETE'
-  });
-  dispatch(removeUser());
-  return response;
+
+export const logout = () => async (dispatch, getState) => {
+const csrfToken = getState().csrf.token;
+await csrfFetch('/api/session', {
+  method: 'DELETE'
+  
+}, csrfToken);
+ dispatch(removeUser());
 };
 
 const initialState = { user: null };

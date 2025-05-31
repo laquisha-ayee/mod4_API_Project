@@ -90,7 +90,8 @@ switch (action.type) {
 case LOAD_REVIEWS: {
 return { ...state, [action.spotId]: action.reviews };
 }
-case LOAD_USER_REVIEWS {
+
+case LOAD_USER_REVIEWS: {
 return { ...state, userReviews: action.reviews };
 }
 

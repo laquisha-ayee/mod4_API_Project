@@ -1,4 +1,6 @@
+// frontend/src/store/csrf.js
 import Cookies from 'js-cookie';
+
 const SET_CSRF_TOKEN = 'csrf/SET_CSRF_TOKEN';
 
 export const setCsrfToken = (token) => ({
@@ -6,37 +8,41 @@ export const setCsrfToken = (token) => ({
   token,
 });
 
+
 export const restoreCSRF = () => async (dispatch) => {
-  const res = await fetch('/api/csrf/restore');
-  const token = Cookies.get('XSRF-TOKEN');
-  dispatch(setCsrfToken(token));
+const res = await fetch('/api/csrf/restore', { credentials: 'include' });
+const token = Cookies.get('XSRF-TOKEN');
+dispatch(setCsrfToken(token));
   return res;
 };
 
 const initialState = {
-  token: null,
+token: null,
 };
+
 
 export default function csrfReducer(state = initialState, action) {
 switch (action.type) {
-  case SET_CSRF_TOKEN:
-return { ...state, token: action.token };
+case SET_CSRF_TOKEN:
+  return { ...state, token: action.token };
 default:
-return state;
+  return state;
   }
 }
 
 export async function csrfFetch(url, options = {}, csrfToken) {
-  options.method = options.method || 'GET';
-  options.headers = options.headers || {};
+options.method = options.method || 'GET';
+options.headers = options.headers || {};
 
 if (options.method.toUpperCase() !== 'GET') {
-  options.headers['Content-Type'] =
-  options.headers['Content-Type'] || 'application/json';
-  options.headers['XSRF-Token'] = csrfToken;
+options.headers['Content-Type'] =
+options.headers['Content-Type'] || 'application/json';
+options.headers['XSRF-Token'] = csrfToken;
 }
 
-  const res = await window.fetch(url, options);
-  if (res.status >= 400) throw res;
+options.credentials = 'include';
+
+const res = await window.fetch(url, options);
+if (res.status >= 400) throw res;
   return res;
 }
