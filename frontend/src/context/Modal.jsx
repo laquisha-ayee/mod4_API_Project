@@ -10,6 +10,7 @@ export function ModalProvider({ children }) {
   const [onModalClose, setOnModalClose] = useState(null);
 
   const closeModal = () => {
+  console.log("closeModal called");
     setModalContent(null);
     if (typeof onModalClose === "function") {
       setOnModalClose(null);

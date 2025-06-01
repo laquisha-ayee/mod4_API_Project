@@ -8,38 +8,38 @@ export const setCsrfToken = (token) => ({
   token,
 });
 
-
 export const restoreCSRF = () => async (dispatch) => {
 const res = await fetch('/api/csrf/restore', { credentials: 'include' });
 const token = Cookies.get('XSRF-TOKEN');
+  if (token) {
+sessionStorage.setItem('XSRF-Token', token); // Store in sessionStorage
 dispatch(setCsrfToken(token));
-  return res;
+}
+return res;
 };
 
 const initialState = {
-token: null,
+  token: null,
 };
 
-
 export default function csrfReducer(state = initialState, action) {
-switch (action.type) {
+  switch (action.type) {
 case SET_CSRF_TOKEN:
-  return { ...state, token: action.token };
+return { ...state, token: action.token };
 default:
-  return state;
-  }
+return state;
+}
 }
 
-export async function csrfFetch(url, options = {}, csrfToken) {
+export async function csrfFetch(url, options = {}) {
 options.method = options.method || 'GET';
 options.headers = options.headers || {};
 
 if (options.method.toUpperCase() !== 'GET') {
-options.headers['Content-Type'] =
-options.headers['Content-Type'] || 'application/json';
-options.headers['XSRF-Token'] = csrfToken;
+  options.headers['Content-Type'] =
+  options.headers['Content-Type'] || 'application/json';
+  options.headers['XSRF-Token'] = sessionStorage.getItem('XSRF-Token');
 }
-
 options.credentials = 'include';
 
 const res = await window.fetch(url, options);

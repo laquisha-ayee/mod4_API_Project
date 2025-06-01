@@ -1,4 +1,5 @@
-import { csrfFetch } from './csrf';
+//import { csrfFetch } from './csrf';
+import { restoreCSRF } from './csrf';
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -15,27 +16,22 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-export const signup = (user) => async (dispatch) => {
-    const { username, firstName, lastName, email, password } = user;
-    const response = await csrfFetch("/api/users", {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        firstName,
-        lastName,
-        email,
-        password
-      })
-    });
+export const signup = (user) => async (dispatch, getState) => {
+  const csrfToken = getState().csrf.token;
+  const response = await csrfFetch("/api/users", {
+    method: "POST",
+    body: JSON.stringify(user)
+  }, csrfToken);
 
-    if(response.ok) {
-        const data = await response.json();
-        dispatch(setUser(data.user));
-        return data.user;
-    } else {
-        const errors = await response.json();
-        throw errors;
-    }
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    await dispatch(restoreCSRF());
+    return data.user;
+  } else {
+    const errors = await response.json();
+    throw errors;
+  }
 };
 
 export const restoreUser = () => async (dispatch) => {
@@ -45,7 +41,7 @@ export const restoreUser = () => async (dispatch) => {
     return response;
   };
 
-export const login = (user) => async (dispatch) => {
+export const login = (user) => async (dispatch, getState) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
     method: "POST",
@@ -53,12 +49,13 @@ export const login = (user) => async (dispatch) => {
       credential,
       password
     })
-  });
+  }, getState().csrf.token);
 
 if (response.ok) {
   const data = await response.json();
   dispatch(setUser(data.user));
-  return response;
+  await dispatch(restoreCSRF());
+  return data.user;
 } else {
     const errors = await response.json();
     throw errors;

@@ -22,34 +22,45 @@ function LoginFormModal() {
 const isButtonDisabled = credential.length < 4 || password.length < 6;
 
 const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
-      .catch(async (res) => {
-  const data = await res.json();
-  if (data && data.errors) {
-   setErrors(data.errors);
-   }
-  });
- };
+e.preventDefault();
+  setErrors({});
+return dispatch(sessionActions.login({ credential, password }))
+  .then(closeModal)
+  .catch((err) => {
+if (err?.errors) {
+  setErrors(err.errors);
+} else if (err?.message) {
+  setErrors([err.message]);
+} else {
+  setErrors(["An unknown error occurred."]);
+}
+ });
+  };
 
 const handleDemoLogin = (e) => {
-  e.preventDefault();
+e.preventDefault();
   setErrors({});
-  dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
+console.log("Demo login clicked");
+dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
   .then(closeModal)
-  .catch(async (res) => {
-const data = await res.json();
-  if (data && data.errors) setErrors(data.errors);
-    });
-};
+  .catch((err) => {
+if (err?.errors) {
+  setErrors(err.errors);
+} else if (err?.message) {
+  setErrors([err.message]);
+} else {
+  setErrors(["An unknown error occurred."]);
+}
+});
+  };
+
 
   return (
  <div className="login-modal">
   <button 
-className="close-modal-btn" 
+className="close-modal-btnA" 
 onClick={closeModal}>&times;</button>
+
 <h1>Log in</h1>
 <form onSubmit={handleSubmit}>
      
@@ -80,12 +91,13 @@ Password
 type="submit" 
 className="login-button" 
 disabled={isButtonDisabled}> 
-  Log In</button>
+  Enter</button>
 </form>
-
-
-<a href="#" className="demo-user-link" onClick={handleDemoLogin}>Demo User</a>
+<a href="#" className="demo-user-link" onClick={handleDemoLogin}>
+  Demo User
+</a>
 </div>
+
 );
     }
 

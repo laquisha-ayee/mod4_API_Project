@@ -17,27 +17,40 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
+  
+const isDisabled =
+  !email ||
+  !username ||
+  !firstName ||
+  !lastName ||
+  !password ||
+  !confirmPassword ||
+password.length < 6 ||
+username.length < 4 ||
+password !== confirmPassword;
+
+const handleSubmit = (e) => {
+e.preventDefault();
+if (password === confirmPassword) {
+setErrors({});
   return dispatch(
 sessionActions.signup({
-email,
- username,
-firstName,
-lastName,
-password
+  email,
+  username,
+  firstName,
+  lastName,
+  password
 })
-  )
-  .then(closeModal)
-  .catch(async (res) => {
-  const data = await res.json();
+)
+.then(closeModal)
+.catch(async (res) => {
+const data = await res.json();
   if (data?.errors) {
-  setErrors(data.errors);
-   }
- });
+setErrors(data.errors);
 }
+  });
+    }
+
 
 return setErrors({
   confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -47,11 +60,11 @@ return setErrors({
 return (
 <div className="signup-form">
   <div className="signup-form-content">
- <button className="close-modal-btn" onClick={closeModal}>
+ <button className="close-modal-btnB" onClick={closeModal}>
     &times;
  </button>
 
-<h1>Enter your information</h1>
+<h1>Enter Your Information</h1>
   <form onSubmit={handleSubmit}>
    <label>
   Email
@@ -121,7 +134,7 @@ required
 <p className="error">{errors.confirmPassword}</p>
 )}
 
-<button type="submit">Sign Up</button>
+<button type="submit" className="signup-button" disabled={isDisabled}>Sign Up</button>
 </form>
    </div>
       </div>

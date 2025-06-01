@@ -23,7 +23,9 @@
 
 .login-modal h1 {
     color: black;
-    font-size: 2rem;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    font-size: 40px;
     margin-bottom: 24px;
     text-align: center;
   }
@@ -34,6 +36,9 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+
   }
 .login-modal label {
     font-weight: 500;
@@ -44,17 +49,17 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #bbb;
-    border-radius: 6px;
+    border-radius: 0px;
     font-size: 1rem;
     margin-bottom: 8px;
   }
 
 
   .login-modal button[type="submit"] {
-    background: #ff5a5f;
+    background: #de787c;
     color: #fff;
     border: solid;
-    border-radius: 6px;
+    border-radius: 0px;
     padding: 10px 0;
     font-size: 1.1rem;
     font-weight: bold;
@@ -73,7 +78,7 @@
  }
 
  .login-modal label {
-    color: antiquewhite;
+    color: black;
     font-weight: 600;
     font-size: 1.1rem; 
 }
@@ -86,4 +91,25 @@
 }
 .demo-user-link:hover {
     color: red;
+}
+
+.close-modal-btnA {
+  position: absolute;
+  top: 150px;         
+  right: 30px;       
+  width: 20px;      
+  height: 20px;
+  background: lightpink;
+  border: solid;
+  font-size: 20px;   
+  cursor: pointer;
+  color: black;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+.close-modal-btnA:hover {
+  color: red;
 }
