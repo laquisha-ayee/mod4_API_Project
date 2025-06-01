@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createSpot } from '../store/spots'; 
 import './CreateSpotForm.css';
+import { csrfFetch } from '../store/csrf'; 
+
 
 function isValidImageUrl(url) {  
 const cleanUrl = url.split('?')[0];
@@ -78,7 +80,7 @@ try {
 const data = await dispatch(createSpot(spotData));
 const imageUrls = [previewImage, image2, image3, image4, image5].filter(Boolean);
   for (let i = 0; i < imageUrls.length; i++) {
-await fetch(`/api/spots/${data.id}/images`, {
+  await csrfFetch(`/api/spots/${data.id}/images`, {
 method: "POST",
 headers: { "Content-Type": "application/json" },
 body: JSON.stringify({

@@ -72,17 +72,19 @@ dispatch({ type: 'UPDATE_REVIEW', review: updatedReview });
 
 
 export const deleteReview = (spotId, reviewId) => async (dispatch) => {
-const res = await fetch(`/api/reviews/${reviewId}`, {
+try {
+const res = await csrfFetch(`/api/reviews/${reviewId}`, {
   method: "DELETE"
 });
-  if (res.ok) {
-  dispatch(removeReview(spotId,reviewId));
-  return true;
-} else {
-  return false;
+if (res.ok) {
+  dispatch({ type: 'REMOVE_REVIEW', reviewId, spotId });
 }
- };
-
+  } catch (err) {
+if (err.status === 404) {
+  dispatch({ type: 'REMOVE_REVIEW', reviewId, spotId });
+}
+ }
+};
 
 const initialState = {};
 export default function reviewsReducer(state = initialState, action) {
@@ -113,10 +115,17 @@ r.id === action.review.id ? action.review : r
 }
 
 case REMOVE_REVIEW: {
-return {
-    ...state,
-    [action.spotId]: state[action.spotId].filter(r => r.id !== action.reviewId)
-  };
+const newState = { ...state };
+
+if (newState[action.spotId]) {
+newState[action.spotId] = newState[action.spotId].filter(r => r.id !== action.reviewId);
+}
+
+if (Array.isArray(newState.userReviews)) {
+newState.userReviews = newState.userReviews.filter(r => r.id !== action.reviewId);
+}
+
+return newState;
 }
 
 default:
