@@ -152,3 +152,41 @@
 }
 
 
+.post-review-btn {
+    background: salmon;
+    color: antiquewhite;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    
+    cursor: pointer;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+  }
+.post-review-btn:hover {
+    background: #c13b6b;
+  }
+
+.edit-btn, .delete-btn {
+  padding: 6px 18px;
+  border: 1px solid black;
+  border-radius: 0px;
+  background: antiquewhite;
+  color: black;
+  cursor: pointer;
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  font-weight: 444;
+}
+.edit-btn:hover  {
+  background: #e75480;
+  color: white;
+  border-color: #e75480;
+}
+

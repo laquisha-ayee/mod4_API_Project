@@ -10,11 +10,11 @@
 
 .modal-content {
   background: antiquewhite;
-  padding: 2rem 2.5rem 2rem 2.5rem;
-  border-radius: 16px;
+  padding: 20px 40px;
+  border-radius: 8px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.2);
   min-width: 350px;
-  max-width: 90vw;
+  max-width: 200px;
   position: relative;
 }
 
@@ -28,6 +28,8 @@
   color: #e75480;
   cursor: pointer;
 }
+
+
 
 .review-form-modal-form {
   display: flex;
@@ -59,74 +61,73 @@
   justify-content: center;
 }
 
-.modal-submit-btn {
-  background: #ff6f6f;
-  color: white;
-  border: none;
+
+.modal-submit-btn, .no-btn {
+  background: rgb(243, 136, 154);
+  color: black;
+  border: 1px solid;
   border-radius: 8px;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
+  padding: 8px 16px; 
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 1rem;
+  margin: 8px 10px; 
   transition: background 0.2s;
 }
-
+.modal-submit-btn:hover {
+  background: #e75480; 
+}
 .modal-submit-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
 }
 
-.delete-review-btn {
-  margin-top: 1rem;
-  background: pink;
-  color: antiquewhite;
-  border: solid lightgray;
-  border-radius: 6px;
-  padding: 6px 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.2s;
-}
-.delete-review-btn:hover {
-  background: #e75480;
+.no-btn {
+  background: whitesmoke;
+  color: #333;
+  border: 2px solid #ccc;
 }
 
 .user-reviews-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 24px;
-    background: antiquewhite;
-    border: 2px solid black;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 24px;
+  background: antiquewhite;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
+
 .review-card {
-    border-bottom: 1px solid white;
-    padding: 16px 0;
+  border-bottom: 1px solid white;
+  padding: 16px 0;
 }
+
 .review-card:last-child {
-    border-bottom: 1px solid white;
-    padding: 16px 0;
+  border-bottom: none; 
+  padding: 16px 0;
 }
-.update-btn, .delete-btn {
-    background: pink;
-    color: black;
-    border: 1px solid white;
-    border-radius: 4px;
-    padding: 6px 18px;
-    font-size: 1rem;
-    margin-top: 6px;
-    margin-right: 8px;
-    cursor: pointer;
-    box-shadow: none;
-    transition: background 0.2s;
-}
-.update-btn:hover, .delete-btn:hover {
-     background: #e75480;
-     border-color: #e75480;
 
 
+
+.update-btn, .delete-Areview-btn {
+  background: pink;
+  color: black;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
+
+.update-btn:hover, .delete-Areview-btn:hover {
+  background: #e75480;
+  border-color: #e75480;
+}
+
+
 .review-modal {
   background: #fff;
   border-radius: 12px;
@@ -136,10 +137,12 @@
   margin: 40px auto;
   text-align: center;
 }
+
 .review-modal h2 {
-  font-size: 1.5rem;
+  font-size: 16px;
   margin-bottom: 18px;
 }
+
 .review-modal textarea {
   width: 100%;
   min-height: 80px;
@@ -149,10 +152,12 @@
   border: 1px solid #ccc;
   font-size: 1rem;
 }
+
 .review-modal .star-row {
   font-size: 2rem;
   margin-bottom: 18px;
 }
+
 .review-modal button[type="submit"] {
   background: #ff5a5f;
   color: #fff;
@@ -166,20 +171,23 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .review-modal button[type="submit"]:hover {
   background: #e75480;
 }
+
 .close-modal-btn {
   position: absolute;
   top: 16px;
   right: 16px;
   background: lightpink;
   border: solid;
-  font-size: 2px;
+  font-size: 16px;
   cursor: pointer;
   color: black;
   transition: color 0.2s;
 }
+
 .close-modal-btn:hover {
   color: #ff5a5f;
 }
