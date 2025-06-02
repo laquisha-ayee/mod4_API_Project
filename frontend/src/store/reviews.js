@@ -77,11 +77,11 @@ const res = await csrfFetch(`/api/reviews/${reviewId}`, {
   method: "DELETE"
 });
 if (res.ok) {
-  dispatch({ type: 'REMOVE_REVIEW', reviewId, spotId });
+  dispatch(removeReview(spotId, reviewId));
 }
   } catch (err) {
 if (err.status === 404) {
-  dispatch({ type: 'REMOVE_REVIEW', reviewId, spotId });
+  dispatch(removeReview(spotId, reviewId));
 }
  }
 };

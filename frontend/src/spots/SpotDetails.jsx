@@ -50,7 +50,6 @@ const isOwner = currentUser && spot && spot.ownerId === currentUser.id;
 const hasReviewed = reviews.some(review => review.userId === currentUser?.id);
 const canPostReview = currentUser && !isOwner && !hasReviewed;
 
-
 return (
 <div className="spot-details-container">
   <h1 className="spot-title">{spot.name}</h1>
@@ -90,7 +89,7 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
 <span className="spot-rating">
 &#9733; {typeof spot.avgStarRating === "number"
 ? spot.avgStarRating.toFixed(2)
-: "New"} · {spot.numReviews} reviews
+: "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
 </span>
   
 </div>
@@ -112,7 +111,7 @@ Reserve
 <span className="spot-rating">
   &#9733; {typeof spot.avgStarRating === "number"
 ? spot.avgStarRating.toFixed(2)
-: "New"} · {spot.numReviews} reviews
+: "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
 </span>
 </div>
 
@@ -121,7 +120,6 @@ Reserve
 className="post-review-btn"
 onClick={() => setShowReviewModal(true)}
 >
-  
 Post Your Review
 </button>
 )}
@@ -130,43 +128,44 @@ Post Your Review
 <ReviewFormModal
   spotId={spotId}
   onClose={() => setShowReviewModal(false)}
-  onReviewSubmit={async newReview => {
-setReviews([newReview, ...reviews]);
+onReviewSubmit={async () => {
 setShowReviewModal(false);
-
-const res = await fetch(`/api/spots/${spotId}`);
-if (res.ok) {
-const updatedSpot = await res.json();
-  setSpot(updatedSpot);
-}
- }}
+await dispatch(fetchReviews(spotId));
+await dispatch(fetchSpotDetails(spotId));
+}}
 />
 )}
 
 <div className="spot-reviews-list">
-{reviews.length > 0 ? (
-reviews.map(review => (
+{reviews.length > 0 ? (() => {
+const reviewsCopy = [...reviews];
+const sortedReviews = reviewsCopy.sort((a, b) => {
+const dateA = new Date(a.createdAt);
+const dateB = new Date(b.createdAt);
+  return dateB - dateA;
+});
+  
+return sortedReviews.map(review => (
 <div key={review.id} className="spot-review">
 <div className="review-author">{review.User?.firstName || "Unknown User"}</div>
 <div className="review-date">{formatDate(review.createdAt)}</div>
 <div className="review-text">{review.review}</div>
   {review.userId === currentUser?.id && (
-
 <button
-  className="delete-review-btn"
-  onClick={() => handleDeleteReview(review.id)}>
-    Delete
+className="delete-review-btn"
+onClick={() => handleDeleteReview(review.id)}>
+  Delete
 </button>
 )}
- </div>
-))
-) : (
+</div>
+));
+})() : (
 <div>No reviews yet</div>
 )}
 </div>
 </div>
 </div>
-  );
+);
 }
 
 export default SpotDetails;
