@@ -111,7 +111,7 @@ return (
 )}
 
  <section>
-<h2>Wheres your place located?</h2>
+<h2>Where's your place located?</h2>
 <p>Guests will only get your exact address once they booked a reservation.</p>
 <label>
 Country
@@ -159,7 +159,7 @@ Latitude
 
 <section>
   <h2>Create a title for your spot</h2>
-<p>Catch guests attention with a spot title that highlights what makes your place special.</p>
+<p>Catch guest's attention with a spot title that highlights what makes your place special.</p>
 <input
   value={name}
   onChange={e => setName(e.target.value)}
