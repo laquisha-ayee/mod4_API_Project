@@ -43,25 +43,38 @@ export const restoreUser = () => async (dispatch) => {
 
 export const login = (user) => async (dispatch, getState) => {
   const { credential, password } = user;
-  const response = await csrfFetch("/api/session", {
-    method: "POST",
-    body: JSON.stringify({
-      credential,
-      password
-    })
-  }, getState().csrf.token);
+  
+  try {
+const response = await csrfFetch("/api/session", {
+method: "POST",
+body: JSON.stringify({
+  credential,
+  password
+  })
+}, getState().csrf.token);
 
-if (response.ok) {
-  const data = await response.json();
-  dispatch(setUser(data.user));
-  await dispatch(restoreCSRF());
-  return data.user;
+const data = await response.json();
+dispatch(setUser(data.user));
+await dispatch(restoreCSRF());
+return data.user;
+    
+  } catch (responseError) {
+if (responseError.json) {
+  try {
+const errorData = await responseError.json();
+const error = new Error(errorData.message || "Login failed");
+error.errors = errorData.errors;
+  throw error;
+} catch (parseError) {
+const error = new Error("Login failed");
+error.errors = { credential: "The provided credentials were invalid." };
+  throw error;
+  }
 } else {
-    const errors = await response.json();
-    throw errors;
-    }
+  throw responseError;
+}
+}
 };
-
 
 export const logout = () => async (dispatch, getState) => {
 const csrfToken = getState().csrf.token;

@@ -5,7 +5,6 @@ const Validator = require('validator');
 module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
-      // Define associations here
     }
 
     toSafeObject() {
@@ -15,7 +14,7 @@ module.exports = (sequelize) => {
 
     validatePassword(password) {
       console.log("bcrypt.compareSync typeof this.hashedPassword:", typeof this.hashedPassword);
-      return bcrypt.compareSync(password, this.hashedPassword);
+      return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
 
     static getCurrentUserById(id) {

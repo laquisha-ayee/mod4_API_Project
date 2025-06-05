@@ -56,24 +56,13 @@ router.post("/", validateLogin, async (req, res, next) => {
   try {
     const { credential, password } = req.body;
 
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential,
-        },
-      },
-    });
+    const user = await User.login(credential, password);
 
-    if (
-      !user ||
-      !bcrypt.compareSync(password, user.hashedPassword.toString())
-    ) {
-      const err = new Error("Invalid credentials");
-      err.status = 401;
-      err.title = "Login failed";
-      err.errors = { credential: "The provided credentials were invalid." };
-      return next(err);
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        errors: { credential: "The provided credentials were invalid." }
+      });
     }
 
     const safeUser = {
@@ -94,6 +83,8 @@ router.post("/", validateLogin, async (req, res, next) => {
   }
 });
 
+
+
 // Log out
 router.delete("/", (_req, res, next) => {
   try {
@@ -105,7 +96,7 @@ router.delete("/", (_req, res, next) => {
 });
 
 // Restore session user
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   try {
     const { user } = req;
     if (user) {

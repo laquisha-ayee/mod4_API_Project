@@ -21,6 +21,8 @@ function LoginFormModal() {
 
 const isButtonDisabled = credential.length < 4 || password.length < 6;
 
+
+
 const handleSubmit = (e) => {
 e.preventDefault();
   setErrors({});
@@ -30,12 +32,15 @@ return dispatch(sessionActions.login({ credential, password }))
 if (err?.errors) {
   setErrors(err.errors);
 } else if (err?.message) {
-  setErrors([err.message]);
+  setErrors({ credential: err.message }); 
 } else {
-  setErrors(["An unknown error occurred."]);
+  setErrors({ credential: "An unknown error occurred." }); 
 }
  });
   };
+
+
+
 
 const handleDemoLogin = (e) => {
 e.preventDefault();
