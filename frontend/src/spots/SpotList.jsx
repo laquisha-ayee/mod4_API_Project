@@ -49,7 +49,7 @@ className="spot-image"
 {spot.city}, {spot.state}
 <span className="spot-rating">
 &#9733; 
-{typeof spot.avgRating === "number" ? spot.avgRating.toFixed(2) : "New"}
+{spot.avgRating ? parseFloat(spot.avgRating).toFixed(1) : "New"}
 </span>
     </div>
 <div className="spot-price">
