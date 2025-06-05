@@ -730,23 +730,6 @@ router.post(
 
 
 
-// TEMPORARY ADMIN ROUTE - REMOVE AFTER USE!
-router.delete('/admin/delete/:spotId', async (req, res) => {
-  try {
-    const { spotId } = req.params;
-    const deletedRows = await Spot.destroy({ where: { id: spotId } });
-    
-    if (deletedRows === 0) {
-      return res.status(404).json({ message: 'Spot not found' });
-    }
-    
-    res.json({ message: `Spot ${spotId} deleted successfully` });
-  } catch (error) {
-    console.error('Error deleting spot:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
 
 module.exports = router;
 
