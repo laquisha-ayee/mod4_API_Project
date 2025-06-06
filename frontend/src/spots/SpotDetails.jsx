@@ -63,17 +63,12 @@ return (
   {otherImages.map((img) => {
 const realIdx = images.findIndex(i => i.url === img.url);
 return (
- <img
+<img
   key={img.url}
-   src={img.url}
- alt={`${spot.name} ${realIdx + 1}`}
-className="small-image"
-onClick={() => setMainImageIdx(realIdx)}
-  style={{
-cursor: "pointer",
-  border: realIdx === mainImageIdx ? "2px solid #e75480" : "none",
-boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
-}}
+  src={img.url}
+  alt={`${spot.name} ${realIdx + 1}`}
+  className={`small-image ${realIdx === mainImageIdx ? 'selected' : ''}`}
+  onClick={() => setMainImageIdx(realIdx)}
 />
  );
   })}

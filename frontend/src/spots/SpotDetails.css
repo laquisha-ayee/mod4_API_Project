@@ -190,3 +190,12 @@
   border-color: #e75480;
 }
 
+.small-image {
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+}
+.small-image.selected {
+  border: 2px solid #e75480;
+  box-shadow: 0 0 8px black;
+}
