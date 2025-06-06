@@ -84,7 +84,7 @@ return (
 <span className="spot-rating">
 &#9733; {spot.avgStarRating ? 
   parseFloat(spot.avgStarRating).toFixed(1)
-  : "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
+  : "New"} · {spot.numReviews} {Number(spot.numReviews) === 1 ? "review" : "reviews"}
 </span>
   
 </div>
