@@ -57,6 +57,7 @@
     align-items: stretch;
     height: fit-content;
 }
+
 .spot-price-rating {
     display: flex;
     flex-direction: column;
