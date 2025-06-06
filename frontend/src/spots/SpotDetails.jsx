@@ -115,7 +115,7 @@ Reserve
 <button
   className="post-review-btn"
   onClick={() => setShowReviewModal(true)}>
-{reviews.length === 0 ? "Be the first to post a review!" : "Post Your Review"}
+{Number(spot.numReviews) === 0 ? "Be the first to post a review!" : "Post Your Review"}
 </button>
 )}
 
