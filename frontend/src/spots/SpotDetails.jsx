@@ -105,18 +105,17 @@ Reserve
 <div className="spot-reviews-header">
 <span className="spot-rating">
   &#9733; {spot.avgStarRating ? 
-    parseFloat(spot.avgStarRating).toFixed(1)
-    : "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
+  parseFloat(spot.avgStarRating).toFixed(1)
+  : "New"} · {spot.numReviews} {Number(spot.numReviews) === 1 ? "review" : "reviews"}
 </span>
 </div>
 
 
 {canPostReview && (
 <button
-className="post-review-btn"
-onClick={() => setShowReviewModal(true)}
->
-Post Your Review
+  className="post-review-btn"
+  onClick={() => setShowReviewModal(true)}>
+{reviews.length === 0 ? "Be the first to post a review!" : "Post Your Review"}
 </button>
 )}
 
