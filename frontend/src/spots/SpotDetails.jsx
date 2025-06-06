@@ -87,9 +87,9 @@ boxShadow: realIdx === mainImageIdx ? "0 0 8px #e75480" : "none"
 <span className="per-night">night</span></span>
 
 <span className="spot-rating">
-&#9733; {typeof spot.avgStarRating === "number"
-? spot.avgStarRating.toFixed(2)
-: "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
+&#9733; {spot.avgStarRating ? 
+  parseFloat(spot.avgStarRating).toFixed(1)
+  : "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
 </span>
   
 </div>
@@ -109,11 +109,12 @@ Reserve
 <div className="spot-reviews-section">
 <div className="spot-reviews-header">
 <span className="spot-rating">
- &#9733; {spot.avgRating ? 
-  parseFloat(spot.avgRating).toFixed(1) 
-  : "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
+  &#9733; {spot.avgStarRating ? 
+    parseFloat(spot.avgStarRating).toFixed(1)
+    : "New"} · {spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}
 </span>
 </div>
+
 
 {canPostReview && (
 <button
