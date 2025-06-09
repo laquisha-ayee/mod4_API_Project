@@ -6,6 +6,8 @@ import { fetchReviews, deleteReview } from "../store/reviews";
 import ReviewFormModal from "../reviews/ReviewFormModal";
 import './SpotDetails.css';
 
+
+
 function SpotDetails() {
 const { spotId } = useParams();
 const dispatch = useDispatch();
@@ -17,6 +19,10 @@ const currentUser = useSelector(state => state.session.user);
 const [mainImageIdx, setMainImageIdx] = useState(0);
 const [showReviewModal, setShowReviewModal] = useState(false);
 const [loading, setLoading] = useState(true);
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [reviewToDelete, setReviewToDelete] = useState(null);
+
+
 
 useEffect(() => {
 const fetchData = async () => {
@@ -28,10 +34,22 @@ setMainImageIdx(0);
 fetchData();
 }, [dispatch, spotId]);
 
-const handleDeleteReview = async (reviewId) => {
-  if (!window.confirm("Are you sure you want to delete this review?")) return;
-await dispatch(deleteReview(spotId, reviewId));
-await dispatch(fetchSpotDetails(spotId));
+
+const handleDeleteClick = (reviewId) => {
+  setReviewToDelete(reviewId);
+  setShowDeleteModal(true);
+};
+
+const handleConfirmDelete = async () => {
+  await dispatch(deleteReview(spotId, reviewToDelete));
+  await dispatch(fetchSpotDetails(spotId));
+  setShowDeleteModal(false);
+  setReviewToDelete(null);
+};
+
+const handleCancelDelete = () => {
+  setShowDeleteModal(false);
+  setReviewToDelete(null);
 };
 
 if (loading) return <div>Loading...</div>;
@@ -110,7 +128,6 @@ Reserve
 </span>
 </div>
 
-
 {canPostReview && (
 <button
   className="post-review-btn"
@@ -148,7 +165,7 @@ return sortedReviews.map(review => (
   {review.userId === currentUser?.id && (
 <button
 className="delete-review-btn"
-onClick={() => handleDeleteReview(review.id)}>
+onClick={() => handleDeleteClick(review.id)}>
   Delete
 </button>
 )}
@@ -159,6 +176,18 @@ onClick={() => handleDeleteReview(review.id)}>
 )}
 </div>
 </div>
+
+{showDeleteModal && (
+<div className="modal-overlay">
+<div className="modal-content">
+  <h2>Confirm Delete</h2>
+  <p>Are you sure you want to delete this review?</p>
+  <button className="modal-submit-btn" onClick={handleConfirmDelete}>Yes</button>
+  <button className="no-btn" onClick={handleCancelDelete}>No</button>
+</div>
+</div>
+)}
+
 </div>
 );
 }
