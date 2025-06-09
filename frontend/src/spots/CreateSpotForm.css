@@ -1,17 +1,17 @@
 .create-spot-form {
     max-width: 600px;
     margin: 32px auto;
-    background: salmon;
+    background: rgb(228, 116, 142);
     border-radius: 8px;
     padding: 32px 40px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgb(109, 39, 39);
     display: flex;
     flex-direction: column;
     gap: 32px;
 }
 .create-spot-form h1 {
     text-align: center;
-    font-size: 32px;
+    font-size: 48px;
     margin-bottom: 24px;
 }
 .create-spot-form section {

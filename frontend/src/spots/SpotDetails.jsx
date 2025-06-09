@@ -97,7 +97,7 @@ return (
   <div className="spot-price-rating">
 <span className="spot-price">
   ${spot.price} 
-<span className="per-night">night</span></span>
+<span className="per-night">per night</span></span>
 
 <span className="spot-rating">
 &#9733; {spot.avgStarRating ? 

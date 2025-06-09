@@ -1,13 +1,19 @@
 .spot-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 32px;
-    padding: 32px;
-  }
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    padding: 120px;
+    background-image: url('https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?b=1&s=612x612&w=0&k=20&c=oO_UHZ8EOACtQqZ6SekvhrbVesudj0l1C4cylUcjvY8=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 20px;
+}
   .spot-card {
-    background: pink;
+    background: rgb(251, 210, 210);
     border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 22px rgb(192, 85, 85);
     overflow: hidden;
     transition: transform 0.2s;
     width: 300px;
@@ -20,8 +26,8 @@
     transform: translateY(-8px) scale(1.03);
   }
   .spot-image {
-    width: 120%;
-    height: 200px;
+    width: 140%;
+    height: 333px;
     object-fit: cover;
     display: block;
   }

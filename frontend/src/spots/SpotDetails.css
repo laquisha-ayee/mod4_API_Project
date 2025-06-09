@@ -1,14 +1,34 @@
+.spot-details-page {
+    background-image: url('https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?b=1&s=612x612&w=0&k=20&c=oO_UHZ8EOACtQqZ6SekvhrbVesudj0l1C4cylUcjvY8=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+body {
+    background-image: url('https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?b=1&s=612x612&w=0&k=20&c=oO_UHZ8EOACtQqZ6SekvhrbVesudj0l1C4cylUcjvY8=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
 .spot-details-container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 32px;
+    padding: 22px;
+    background: white; 
+    border-radius: 0px;  
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 .spot-title {
-    font-size: 2.2rem;
+    font-size: 44px;
     margin-bottom: 8px;
 }
 .spot-location {
-    font-size: 1.1rem;
+    font-size: 20px;
     color: gray;
     margin-bottom: 32px;
 }
@@ -65,18 +85,16 @@
     margin-bottom: 16px;
 }
 .spot-price {
-    font-size: 1.5rem;
+    font-size: 33px;
     font-weight: bold;
 }
 .per-night {
-    font-size: 1rem;
-    font-weight: normal;
+    font-size: 22px;
+    font-weight: bolder;
     color: gray;
+    padding: 12px;
 }
-.spot-rating {
-    color: darkmagenta;
-    font-weight: bold;
-}
+
 .reserve-btn {
     background: salmon;
     color: antiquewhite;
@@ -93,21 +111,22 @@
     background: #c13b6b;
   }
 .spot-host {
-    font-size: 1.2rem;
+    color: black;
+    font-size: 20px;
     margin: 32px 0 12px 0;
     font-weight: bold;
   }
 .spot-description {
-    font-size: 1.1rem;
-    margin-bottom: 32px;
+    font-size: 18px;
+    margin-bottom: 100px;
   }
+
 .spot-reviews-section {
-    margin-top: 40px;
-    border-top: 1px solid #eee;
-    padding-top: 24px;
+    border-top: 1px solid #c04848;
+    padding-top: 22px;
   }
 .spot-reviews-header {
-    font-size: 1.2rem;
+    font-size: 40px;
     font-weight: bold;
     margin-bottom: 16px;
     display: flex;
@@ -117,7 +136,7 @@
 .spot-rating {
     color: #e75480;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 22px;
   }
 .spot-reviews-list {
     display: flex;
@@ -125,10 +144,14 @@
     gap: 24px;
   }
 .spot-review {
-    background: whitesmoke;
+    background: antiquewhite;
     border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 1px 4px black;
+    padding: 42px;
+    box-shadow: 0 1px 4px rgb(160, 24, 65);
+    max-width: 600px;
+    width: 40%;
+ 
+
   }
 .review-author {
     font-weight: bold;
@@ -190,6 +213,24 @@
   color: white;
   border-color: #e75480;
 }
+
+.delete-review-btn {
+    background: salmon;
+    color: whitesmoke;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 22px;
+    margin-bottom: 2px;
+    transition: background 0.2s;
+}
+
+.delete-review-btn:hover {
+    background: #c13b6b;
+}
+
 
 .small-image {
   cursor: pointer;
